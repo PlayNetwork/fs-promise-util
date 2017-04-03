@@ -121,12 +121,12 @@ export default ((self) => {
 					fileStats = fileStats.filter((fileStat) => {
 						let isLink = fileStat.stats.isSymbolicLink();
 
-						//links filter is defined and this is a symbolic links, so filter it
+						// links filter is defined and this is a symbolic links, so filter it
 						if (typeFilter.links !== null && isLink) {
 							return typeFilter.links;
 						}
 
-						//file filter is defined and this is a file, so filter it
+						// file filter is defined and this is a file, so filter it
 						if (typeFilter.files !== null && !isLink) {
 							return typeFilter.files;
 						}

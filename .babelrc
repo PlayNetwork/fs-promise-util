@@ -1,8 +1,6 @@
 {
   "presets": [
-    "latest"
-  ],
-  "plugins": [
-    "babel-plugin-istanbul"
+    "es2015",
+    "stage-0"
   ]
 }
