@@ -1,11 +1,13 @@
 import 'babel-polyfill';
 import 'source-map-support/register';
 
-import debug from 'debug';
+import debugLog from 'debug';
 import fs from 'graceful-fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
 import renege from 'renege';
+
+const debug = debugLog('fs-promise-util');
 
 export default ((self) => {
 	// Promise for fs.appendFile
@@ -17,15 +19,23 @@ export default ((self) => {
 
 	// Promise for mkdirp (3rd party module)
 	self.ensurePath = (directoryPath) => {
+		debug('examining path %s', directoryPath);
+
 		return new Promise((resolve, reject) => {
 			if (typeof directoryPath !== 'string' || !directoryPath.length) {
+				debug('invalid path %s', directoryPath);
+
 				return reject(new Error('path is invalid'));
 			}
 
 			return mkdirp(directoryPath, (err) => {
 				if (err) {
+					debug('an error occurred while creating the directory %s (error: %s)',
+						directoryPath, err.message);
+
 					return reject(err);
 				}
+				debug('successfully created path %s', directoryPath);
 
 				return resolve();
 			});
@@ -34,6 +44,8 @@ export default ((self) => {
 
 	// Promise that wraps stat to determine true or false
 	self.exists = (filePath) => {
+		debug('checking to see if file %s exists', filePath);
+
 		return new Promise((resolve) => {
 			return self
 				.lstat(filePath)
@@ -47,11 +59,18 @@ export default ((self) => {
 
 	// Promise to remove X number of least recent files matching pattern
 	self.prune = async (directoryPath, filter, retainCount) => {
+		debug('attempting to remove files at %s and retain %s',
+			directoryPath, retainCount);
+
 		if (typeof directoryPath !== 'string' || !directoryPath.length) {
+			debug('invalid path %s', directoryPath);
+
 			throw new Error('path is invalid');
 		}
 
 		if (typeof retainCount !== 'number' || retainCount < 0) {
+			debug('invalid retainCount %s', retainCount);
+
 			throw new Error('retainCount is invalid');
 		}
 
@@ -60,6 +79,8 @@ export default ((self) => {
 			{ filter : { name : filter } });
 
 		if (filePaths.length > retainCount) {
+			debug('removing %d files', (filePaths.length - retainCount));
+
 			return await Promise.all(
 				filePaths
 					.slice(retainCount)
@@ -74,6 +95,8 @@ export default ((self) => {
 
 	// Promise for fs.readdir that additional sorts files based on date
 	self.readAndSort = async (directoryPath, options) => {
+		debug('sorting files based on date at %s', directoryPath);
+
 		// ensure sort function is defined
 		options = options || {};
 		options.sort = (options.sort || ((a, b) => b.stats.mtime - a.stats.mtime));
@@ -85,6 +108,8 @@ export default ((self) => {
 
 		// no files? no need to move down further
 		if (!files.length) {
+			debug('no files found at %s', directoryPath);
+
 			return [];
 		}
 
@@ -166,12 +191,16 @@ export default ((self) => {
 				fileStats = fileStats.sort(options.sort);
 
 				// return an array of file paths
+				debug('successfully sorted files');
+
 				return Promise.resolve(fileStats.map((fileStat) => fileStat.path));
 			});
 	};
 
 	// Promise for fs.createReadStream
 	self.readFile = (filePath, options) => {
+		debug('attempting to read file at %s', filePath);
+
 		return new Promise((resolve, reject) => {
 			let
 				chunks = [],
@@ -196,6 +225,8 @@ export default ((self) => {
 
 	// wrapper for self.writeFile that will always resolve
 	self.tryWriteFile = (filePath, data, options) => {
+		debug('attempting to write file at %s', filePath);
+
 		return new Promise((resolve) => {
 			return self
 				.writeFile(filePath, data, options)
@@ -209,6 +240,8 @@ export default ((self) => {
 
 	// Promise for fs.createWriteStream
 	self.writeFile = (filePath, data, options) => {
+		debug('attempting to write file at %s', filePath);
+
 		return new Promise((resolve, reject) => {
 			let writer = fs.createWriteStream(filePath, options);
 
