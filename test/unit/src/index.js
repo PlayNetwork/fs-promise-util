@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+/* eslint no-unused-vars: 0 */
 import fs from 'graceful-fs';
 import fsWrapper from '../../../src/index';
 import path from 'path';
