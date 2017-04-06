@@ -19,7 +19,8 @@
   "main": "./dist",
   "scripts": {
     "prepublish": "gulp build",
-    "test": "gulp lint && gulp test-coverage && gulp coveralls"
+    "test": "gulp lint && nyc -- _mocha ./test/unit",
+    "test-unit": "gulp clean-reports && nyc -- _mocha ./test/unit"
   },
   "directories": {
     "test": "test"
@@ -28,6 +29,7 @@
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "debug": "^2.2.0",
+    "mkdirp": "0.5.1",
     "renege": "^0.1.4",
     "source-map-support": "^0.4.5"
   },
@@ -48,6 +50,28 @@
     "gulp-mocha": "^3.0.1",
     "gulp-sourcemaps": "^2.5.0",
     "gulp-util": "^3.0.7",
-    "mock-spawn": "^0.2.6"
+    "mock-spawn": "^0.2.6",
+    "nyc": "^10.1.2"
+  },
+  "nyc": {
+    "all": true,
+    "exclude": [
+      "src/**/index.js",
+      "src/json-rpc",
+      "test/sandbox"
+    ],
+    "include": [
+      "src"
+    ],
+    "instrument": false,
+    "report-dir": "./reports",
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false
   }
 }

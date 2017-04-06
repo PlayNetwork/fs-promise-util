@@ -59,8 +59,8 @@ export default ((self) => {
 
 	// Promise to remove X number of least recent files matching pattern
 	self.prune = async (directoryPath, filter, retainCount) => {
-		debug('attempting to remove files at %s and retain %s',
-			directoryPath, retainCount);
+		debug('attempting to remove files at %s',
+			directoryPath);
 
 		if (typeof directoryPath !== 'string' || !directoryPath.length) {
 			debug('invalid path %s', directoryPath);
@@ -69,7 +69,7 @@ export default ((self) => {
 		}
 
 		if (typeof retainCount !== 'number' || retainCount < 0) {
-			debug('invalid retainCount %s', retainCount);
+			debug('invalid retainCount passed');
 
 			throw new Error('retainCount is invalid');
 		}
