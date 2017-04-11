@@ -72,7 +72,17 @@ return new Promise((resolve) => {
 
 ### fs-promise-util.prune (directoryPath, filter, retainCount)
 
-Async function that removes 'x' number of least recent files matching pattern
+This method removes 'x' number of least recent files matching pattern from a directory.
+
+directoryPath: directory to remove the files
+
+filter: pattern for the file removal. For example: a regular expression matching a file name 
+
+retainCount: number of files you want to keep in the directory
+
+``javascript
+return await fs-promise-util.prune(directoryPath, filter, retainCount);
+```
 
 ### fs-promise-util.readdir
 
