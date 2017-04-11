@@ -54,12 +54,21 @@ This method takes in a path as an argument. It checks whether a given path exist
 
 ```javascript
 
-let exists = await fs.exists(filePath);		
+let exists = await fs-promise-util.exists(filePath);		
 ```
 
-### fs-promise-util.lstat
+### fs-promise-util.lstat(path)
 
-This method returns a promise for lstat
+This method returns a promise for lstat. More details here. (https://nodejs.org/api/fs.html#fs_fs_lstat_path_callback)
+
+```javascript
+
+return new Promise((resolve) => {
+				fs-promise-util.lstat(path)
+				.then(() => resolve(true))
+				.catch(() => resolve(false));
+			});
+```
 
 ### fs-promise-util.prune (directoryPath, filter, retainCount)
 

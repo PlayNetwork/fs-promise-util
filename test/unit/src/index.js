@@ -25,7 +25,7 @@ describe('src/index', async () => {
 		});
 	});
 
-	describe('#ensurePath', function () {
+	describe('#ensurePath', () => {
 		it('should reject given undefined path', async () => {
 			return fsWrapper
 				.ensurePath()
@@ -73,7 +73,17 @@ describe('src/index', async () => {
 		});
 	});
 
-	describe('#exists', function () {
+	describe('#lstat', () => {
+		it('should resolve to given path', () => {
+			return new Promise((resolve) => {
+				fsWrapper.lstat(TEST_CACHE_PATH)
+				.then(() => resolve(true))
+				.catch(() => resolve(false));
+			});
+		});
+	});
+
+	describe('#exists', () => {
 		it('should resolve to false given undefined filePath', async () => {
 			return fsWrapper.exists()
 				.should.eventually.be.false;
@@ -110,7 +120,7 @@ describe('src/index', async () => {
 		});
 	});
 
-	describe('#prune', function () {
+	describe('#prune', () => {
 		it('should reject given undefined directoryPath', async () => {
 			return fsWrapper
 				.prune()
@@ -172,7 +182,7 @@ describe('src/index', async () => {
 		});
 	});
 
-	describe('#readAndSort', function () {
+	describe('#readAndSort', () => {
 		it('should reject given undefined directoryPath', async () => {
 			return fsWrapper
 				.readAndSort()
@@ -234,7 +244,7 @@ describe('src/index', async () => {
 		});
 	});
 
-	describe('#tryWriteFile', function () {
+	describe('#tryWriteFile', () => {
 		it('should resolve given undefined filePath', async () => {
 			return await Promise.all([
 				fsWrapper
