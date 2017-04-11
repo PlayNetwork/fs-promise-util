@@ -64,6 +64,13 @@ describe('src/index', async () => {
 				.ensurePath(TEST_CACHE_PATH)
 				.should.be.fulfilled;
 		});
+
+		it('should resolve a Promise for a valid path', async () => {
+			return fsWrapper.ensurePath(TEST_CACHE_PATH)
+				.then((path) => {
+					return Promise.resolve(path);
+				});
+		});
 	});
 
 	describe('#exists', function () {

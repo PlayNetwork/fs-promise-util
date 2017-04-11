@@ -28,16 +28,25 @@ This method returns a new readStream object
 
 ```javascript
 
-return Promise.resolve(fs.createReadStream(targetFile));
+return Promise.resolve(fs-promise-util.createReadStream(targetFile));
 ```
 
 ### fs-promise-util.createWriteStream
 
 This method returns a new writeStream object
 
+
 ### fs-promise-util.ensurePath (directoryPath)
 
-This method creates a given path and returns a Promise
+This method takes in a path as an argument. It creates a given path and returns a Promise.
+
+```javascript
+
+return fs-promise-util.ensurePath(directoryPath)
+	.then((path) => {
+		return Promise.resolve(path);
+	});
+	```
 
 ### fs-promise-util.exists (filePath)
 
