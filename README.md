@@ -18,61 +18,80 @@ This module exposes the following methods.
 
 ## Methods in alphabetical order
 
-###fs-promise-util.appendFile
+### fs-promise-util.appendFile
 
 This method appends data to a file, creating the file if it does not exist and returns a Promise.                                                    
 
-###fs-promise-util.createReadStream
+### fs-promise-util.createReadStream
 
 This method returns a new readStream object
 
-###fs-promise-util.createWriteStream
+```javascript
+
+return Promise.resolve(fs.createReadStream(targetFile));
+```
+
+### fs-promise-util.createWriteStream
 
 This method returns a new writeStream object
 
-###fs-promise-util.ensurePath (directoryPath)
+### fs-promise-util.ensurePath (directoryPath)
 
 This method creates a given path and returns a Promise
 
-###fs-promise-util.exists (filePath)
+### fs-promise-util.exists (filePath)
+
 This method checks whether a given path exists in the file system and returns a Promise(true or false)
 
-###fs-promise-util.lstat
+### fs-promise-util.lstat
+
 This method returns a promise for lstat
 
-###fs-promise-util.prune (directoryPath, filter, retainCount)
+### fs-promise-util.prune (directoryPath, filter, retainCount)
+
 Async function that removes 'x' number of least recent files matching pattern
 
-###fs-promise-util.readdir
+### fs-promise-util.readdir
+
 returns a promise for fs.readdir
 
-###fs-promise-util.readlink
+### fs-promise-util.readlink
+
 returns a promise for fs.readlink
 
-###fs-promise-util.readAndSort (directoryPath, options)
+### fs-promise-util.readAndSort (directoryPath, options)
+
 async function that returns a promise for fs.readdir that additionaly sorts files based on date
 
-###fs-promise-util.readFile (filePath, options)
+### fs-promise-util.readFile (filePath, options)
+
 Promise for fs.createReadStream
 
-###fs-promise-util.realpath
+### fs-promise-util.realpath
+
 Promise for fs.realPath
 
-###fs-promise-util.rename
+### fs-promise-util.rename
+
 Promise for fs.rename
 
-###fs-promise-util.stat
+### fs-promise-util.stat
+
 Promise for fs.stat
 
-###fs-promise-util.symlink
+### fs-promise-util.symlink
+
 Promise for fs.symlink
 
-###fs-promise-util.tryWriteFile (filePath, data, options)
+### fs-promise-util.tryWriteFile (filePath, data, options)
+
 wrapper for fs-promise-util.writeFile that returns a Promise
 
-###fs-promise-util.unlink
+### fs-promise-util.unlink
+
 Promise for fs.unlink
 
-###fs-promise-util.writeFile (filePath, data, options)
+### fs-promise-util.writeFile (filePath, data, options)
+
 Promise for fs.createWriteStream
 
