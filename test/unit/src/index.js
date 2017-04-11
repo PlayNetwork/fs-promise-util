@@ -93,6 +93,21 @@ describe('src/index', async () => {
 					.exists(path.join(TEST_CACHE_PATH, filename))
 					.should.eventually.be.true);
 		});
+
+		it('should resolve a Promise for a existing filePath', () => {
+			return fsWrapper.exists(TEST_CACHE_PATH)
+				.then((path) => {
+					return Promise.resolve(true);
+				});
+		});
+
+		it('should resolve a Promise for an unexisting path', () => {
+			return new Promise((resolve) => {
+				return fsWrapper.exists()
+					.then(() => resolve(true))
+					.catch(() => resolve(false))
+			});
+		});
 	});
 
 	describe('#prune', function () {

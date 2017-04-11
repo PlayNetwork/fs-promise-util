@@ -46,11 +46,16 @@ return fs-promise-util.ensurePath(directoryPath)
 	.then((path) => {
 		return Promise.resolve(path);
 	});
-	```
+```
 
 ### fs-promise-util.exists (filePath)
 
-This method checks whether a given path exists in the file system and returns a Promise(true or false)
+This method takes in a path as an argument. It checks whether a given path exists in the file system and returns a true or a false.
+
+```javascript
+
+let exists = await fs.exists(filePath);		
+```
 
 ### fs-promise-util.lstat
 
