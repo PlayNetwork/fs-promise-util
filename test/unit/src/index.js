@@ -244,6 +244,18 @@ describe('src/index', async () => {
 		});
 	});
 
+	describe('#readFile', () => {
+		it('should resolve reading a file', async () => {
+			let
+				filename = 'file-1.txt',
+				filePath = path.join(TEST_CACHE_PATH, filename);
+			return await prepareTestCacheAsDirectory()
+				.then(() => prepareTestCacheFile(filename))
+				.then(() => fsWrapper.readFile(filePath))
+				.should.be.fulfilled;
+		});
+	});
+
 	describe('#tryWriteFile', () => {
 		it('should resolve given undefined filePath', async () => {
 			return await Promise.all([

@@ -1,5 +1,5 @@
 # fs-promise-util
-A utility library for file system interaction on *nix machines
+A utility library for file system interaction on *nix machines. This library utilizes the graceful-fs, an improvement over the fs module.
 
 ## Requirements
 
@@ -81,7 +81,9 @@ filter: pattern for the file removal. For example: a regular expression matching
 retainCount: number of files you want to keep in the directory
 
 ``javascript
+
 return await fs-promise-util.prune(directoryPath, filter, retainCount);
+
 ```
 
 ### fs-promise-util.readdir
@@ -94,7 +96,11 @@ returns a promise for fs.readlink
 
 ### fs-promise-util.readAndSort (directoryPath, options)
 
-async function that returns a promise for fs.readdir that additionaly sorts files based on date
+This method reads the content of the directory passed and sorts files based on date and returns files. 'options' object can be used to pass in:
+
+options.sort : sort files based on date
+
+options.filter : any filters passed with the file name(options.filter.name)
 
 ### fs-promise-util.readFile (filePath, options)
 
