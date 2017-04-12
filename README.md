@@ -80,7 +80,7 @@ filter: pattern for the file removal. For example: a regular expression matching
 
 retainCount: number of files you want to keep in the directory
 
-``javascript
+```javascript
 
 return await fs-promise-util.prune(directoryPath, filter, retainCount);
 
