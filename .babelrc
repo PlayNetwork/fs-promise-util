@@ -1,8 +1,10 @@
 {
-  "presets": [
-    "latest"
-  ],
   "plugins": [
-    "babel-plugin-istanbul"
+    "babel-plugin-istanbul",
+    "transform-decorators-legacy"
+  ],
+  "presets": [
+    "es2015",
+    "stage-0"
   ]
 }
