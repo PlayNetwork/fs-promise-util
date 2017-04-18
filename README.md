@@ -18,23 +18,72 @@ This module exposes the following methods.
 
 ## Methods in alphabetical order
 
-### fs-promise-util.appendFile
+### fs-promise-util.appendFile(file, data, options)
 
-This method appends data to a file, creating the file if it does not exist and returns a Promise.                                                    
+This method appends data to a file, creating the file if it does not exist and returns a Promise. 
 
-### fs-promise-util.createReadStream
+
+* file [ string | Buffer | number ] filename or file descriptor
+* data [ string | Buffer ]
+* options [ Object> | <string ]
+
+	* encoding [ string | null default = 'utf8' ]
+	* mode [ integer default = 0o666 ]
+	* flag [ string default = 'a' ]
+                                                
+```javascript
+
+return Promise.resolve(fs-promise-util.appendFile(file, data, { encoding : 'binary' }));
+```  
+
+
+
+### fs-promise-util.createReadStream(path, options)
 
 This method returns a new readStream object
 
+* path [ string | Buffer ]
+* options [ string | Object ]
+	* flags [ string ]
+	* encoding [ string ]
+	* fd [ integer ]
+	* mode [ integer ]
+	* autoClose [ boolean ]
+	* start [ integer ]
+	* end [ integer]
+
 ```javascript
 
-return Promise.resolve(fs-promise-util.createReadStream(targetFile));
+return Promise.resolve(fs-promise-util.createReadStream(path));
 ```
 
 ### fs-promise-util.createWriteStream
 
 This method returns a new writeStream object
 
+* path [ string | Buffer ]
+* options [ ]string | Object ]
+	* flags [ string ]
+	* defaultEncoding [ string ]
+	* fd [ integer ]
+	* mode [ integer ]
+	* autoClose [ boolean ]
+	* start [ integer ]
+
+options is an object or string with the following defaults:
+
+	{
+  
+  		flags: 'w',
+  
+  		defaultEncoding: 'utf8',
+  
+  		fd: null,
+  
+  		mode: 0o666,
+  
+  		autoClose: true
+	}
 
 ### fs-promise-util.ensurePath (directoryPath)
 
