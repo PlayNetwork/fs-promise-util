@@ -140,7 +140,6 @@ retainCount: number of files you want to keep in the directory
 ```javascript
 
 return await fs-promise-util.prune(directoryPath, filter, retainCount);
-
 ```
 
 ### fs-promise-util.readdir (path, options)
@@ -153,7 +152,9 @@ This method reads the contents of a directory and returns a promise.
 	
 ```javascript
 
-return await fs-promise-util.readdir(path, { encoding : 'utf8' });```
+return await fs-promise-util.readdir(path, { encoding : 'utf8' });
+```
+
 
 ### fs-promise-util.readlink (path, options)
 
@@ -166,7 +167,8 @@ returns a promise for fs.readlink
 	
 ```javascript
 
-return await fs-promise-util.readlink(path, { encoding : 'utf8' });```
+return await fs-promise-util.readlink(path, { encoding : 'utf8' });
+```
 
 ### fs-promise-util.readAndSort (directoryPath, options)
 
@@ -179,8 +181,8 @@ This method reads the content of the directory passed and sorts files based on d
 ```javascript
 
 let exists = await fs-promise-util.readAndSort(directoryPath, { filter : 	{ name : new RegExp(['fileName', 'fileId'].join('-')),
-  		notEmpty : true} });```
-
+  		notEmpty : true} });
+  		```
 
 ### fs-promise-util.readFile (file, options)
 
