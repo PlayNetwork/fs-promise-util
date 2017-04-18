@@ -25,11 +25,11 @@ This method appends data to a file, creating the file if it does not exist and r
 
 * file [ string | Buffer | number ] filename or file descriptor
 * data [ string | Buffer ]
-* options [ Object> | <string ]
+* options [ Object | string ]
 
-	* encoding [ string | null default = 'utf8' ]
-	* mode [ integer default = 0o666 ]
-	* flag [ string default = 'a' ]
+	* encoding [ string | null ] default = 'utf8' 
+	* mode [ integer ] default = 0o666 
+	* flag [ string ] default = 'a' 
                                                 
 ```javascript
 
@@ -172,39 +172,82 @@ return await fs-promise-util.readlink(path, { encoding : 'utf8' });```
 
 This method reads the content of the directory passed and sorts files based on date and returns files. 'options' object can be used to pass in:
 
-options.sort : sort files based on date
+* options.sort : sort files based on date
 
-options.filter : any filters passed with the file name(options.filter.name)
+* options.filter : any filters passed with the file name(options.filter.name)
 
-### fs-promise-util.readFile (filePath, options)
+```javascript
 
-Promise for fs.createReadStream
+let exists = await fs-promise-util.readAndSort(directoryPath, { filter : 	{ name : new RegExp(['fileName', 'fileId'].join('-')),
+  		notEmpty : true} });```
 
-### fs-promise-util.realpath
+
+### fs-promise-util.readFile (file, options)
+
+This method asynchronously reads the entire contents of a file and returns a Promise
+
+* file [string | Buffer | integer ] filename or file descriptor
+* options [ Object | string ]
+	* encoding [ string | null ] default = null
+	* flag [ string ] default = 'r'
+
+### fs-promise-util.realpath (path, options)
 
 Promise for fs.realPath
 
-### fs-promise-util.rename
+
+* path [ string | Buffer ]
+* options [ string | Object ]
+	* encoding [ string ] default = 'utf8'
+
+### fs-promise-util.rename (oldPath, newPath)
 
 Promise for fs.rename
+
+* oldPath [ string | Buffer ]
+* newPath [ string | Buffer ]
 
 ### fs-promise-util.stat
 
 Promise for fs.stat
 
+* path [ string | Buffer ]
+
 ### fs-promise-util.symlink
 
 Promise for fs.symlink
 
-### fs-promise-util.tryWriteFile (filePath, data, options)
+* target [ string | Buffer ]
+* path [ string | Buffer ]
+* type [ string ]
+
+### fs-promise-util.tryWriteFile (file, data, options)
 
 wrapper for fs-promise-util.writeFile that returns a Promise
+
+* file [ string | Buffer | number ] filename or file descriptor
+* data [ string | Buffer | Uint8Array ]
+* options [ Object | string ]
+
+	* encoding [ string | null ] default = 'utf8' 
+	* mode [ integer ] default = 0o666 
+	* flag [ string ] default = 'w' 
 
 ### fs-promise-util.unlink
 
 Promise for fs.unlink
 
+* path [ string | Buffer ]
+
 ### fs-promise-util.writeFile (filePath, data, options)
 
 Promise for fs.createWriteStream
+
+* file [ string | Buffer | number ] filename or file descriptor
+* data [ string | Buffer | Uint8Array ]
+* options [ Object | string ]
+
+	* encoding [ string | null ] default = 'utf8' 
+	* mode [ integer ] default = 0o666 
+	* flag [ string ] default = 'w' 
 
