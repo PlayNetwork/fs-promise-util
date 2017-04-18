@@ -18,7 +18,7 @@ This module exposes the following methods.
 
 ## Methods in alphabetical order
 
-### fs-promise-util.appendFile(file, data, options)
+### fs-promise-util.appendFile (file, data, options)
 
 This method appends data to a file, creating the file if it does not exist and returns a Promise. 
 
@@ -38,7 +38,7 @@ return Promise.resolve(fs-promise-util.appendFile(file, data, { encoding : 'bina
 
 
 
-### fs-promise-util.createReadStream(path, options)
+### fs-promise-util.createReadStream (path, options)
 
 This method returns a new readStream object
 
@@ -57,7 +57,7 @@ This method returns a new readStream object
 return Promise.resolve(fs-promise-util.createReadStream(path));
 ```
 
-### fs-promise-util.createWriteStream
+### fs-promise-util.createWriteStream (path, options)
 
 This method returns a new writeStream object
 
@@ -84,6 +84,14 @@ options is an object or string with the following defaults:
   
   		autoClose: true
 	}
+	
+
+```javascript
+
+return Promise.resolve(fs-promise-util.createWriteStream(path, {
+						defaultEncoding : 'utf8'
+					})));
+```
 
 ### fs-promise-util.ensurePath (directoryPath)
 
@@ -106,7 +114,7 @@ This method takes in a path as an argument. It checks whether a given path exist
 let exists = await fs-promise-util.exists(filePath);		
 ```
 
-### fs-promise-util.lstat(path)
+### fs-promise-util.lstat (path)
 
 This method returns a promise for lstat. More details here. (https://nodejs.org/api/fs.html#fs_fs_lstat_path_callback)
 
@@ -135,13 +143,30 @@ return await fs-promise-util.prune(directoryPath, filter, retainCount);
 
 ```
 
-### fs-promise-util.readdir
+### fs-promise-util.readdir (path, options)
 
-returns a promise for fs.readdir
+This method reads the contents of a directory and returns a promise.
 
-### fs-promise-util.readlink
+* path [ string | Buffer ]
+* options [ string | Object ] 
+	* encoding [ string ] default = 'utf8'
+	
+```javascript
+
+return await fs-promise-util.readdir(path, { encoding : 'utf8' });```
+
+### fs-promise-util.readlink (path, options)
 
 returns a promise for fs.readlink
+
+* path [ string | Buffer ]
+* options [ string | Object ]
+	* encoding [ string ] default = 'utf8'
+
+	
+```javascript
+
+return await fs-promise-util.readlink(path, { encoding : 'utf8' });```
 
 ### fs-promise-util.readAndSort (directoryPath, options)
 
