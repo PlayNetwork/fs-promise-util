@@ -180,9 +180,8 @@ This method reads the content of the directory passed and sorts files based on d
 
 ```javascript
 
-let exists = await fs-promise-util.readAndSort(directoryPath, { filter : 	{ name : new RegExp(['fileName', 'fileId'].join('-')),
-  		notEmpty : true} });
-  		```
+let exists = await fs-promise-util.readAndSort(directoryPath, { filter :{ name : new RegExp(['fileName', 'fileId'].join('-')), notEmpty : true} });
+```
 
 ### fs-promise-util.readFile (file, options)
 
