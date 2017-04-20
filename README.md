@@ -195,6 +195,7 @@ This method asynchronously reads the entire contents of a file and returns a Pro
 	* encoding [ string | null ] default = null
 	* flag [ string ] default = 'r'
 	
+	
 ```javascript
 
 await fs-promise-util.readFile('/etc/readme');```
@@ -202,9 +203,11 @@ await fs-promise-util.readFile('/etc/readme');```
 	
 If options is a string, then it specifies the encoding. 
 
+
 ```javascript
 
 await fs-promise-util.readFile('/etc/readme', { encoding : 'utf8' });```
+
 
 ### fs-promise-util.realpath (path, options)
 
@@ -220,6 +223,7 @@ Lets say the directory structure is '/etc/readme'
 ```javascript
 
 await fs-promise-util.realpath('readme');```
+
 
 Above method returns '/etc/readme' as a Promise.
 	
