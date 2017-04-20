@@ -288,7 +288,8 @@ return await fs-promise-util
 		// log error
 		return Promise.resolve(false);
 	});
-	```
+```
+
 
 Symbolic links are interpreted at run time as if the contents of the link had been substituted into the path being followed to find a file or directory.
 
