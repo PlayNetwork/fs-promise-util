@@ -183,7 +183,6 @@ This method reads the content of the directory passed and sorts files based on d
 let exists = await fs-promise-util.readAndSort(directoryPath,
 	
 { filter :{ name : new RegExp('\\w+'), notEmpty : true} };)
-
 ```
 
 ### fs-promise-util.readFile (file, options)
@@ -198,7 +197,8 @@ This method asynchronously reads the entire contents of a file and returns a Pro
 	
 ```javascript
 
-await fs-promise-util.readFile('/etc/readme');```
+await fs-promise-util.readFile('/etc/readme');
+```
 
 	
 If options is a string, then it specifies the encoding. 
@@ -206,7 +206,8 @@ If options is a string, then it specifies the encoding.
 
 ```javascript
 
-await fs-promise-util.readFile('/etc/readme', { encoding : 'utf8' });```
+await fs-promise-util.readFile('/etc/readme', { encoding : 'utf8' });
+```
 
 
 ### fs-promise-util.realpath (path, options)
@@ -222,7 +223,8 @@ Lets say the directory structure is '/etc/readme'
 
 ```javascript
 
-await fs-promise-util.realpath('readme');```
+await fs-promise-util.realpath('readme');
+```
 
 
 Above method returns '/etc/readme' as a Promise.
@@ -239,7 +241,8 @@ Returns a Promise for fs.rename
 
 ```javascript
 
-await fs-promise-util.rename('temp/abc', 'tmp/xyz');```
+await fs-promise-util.rename('temp/abc', 'tmp/xyz');
+```
 
 
 If newpath already exists, it will be atomically replaced, so that there is no point at which another process attempting to access newpath will find it missing.  However, there will probably be a window in which both oldpath and newpath refer to the file being renamed.
@@ -298,7 +301,7 @@ If path exists, it will not be overwritten.
 
 ### fs-promise-util.tryWriteFile (file, data, options)
 
-This method is a wrapper for fs-promise-util.writeFile that returns a Promise. 
+This method is a wrapper for fs-promise-util.writeFile that always resolves to a Promise.
 
 Asynchronously writes data to a file, replacing the file if it already exists. data can be a string or a buffer.
 
@@ -312,11 +315,37 @@ The encoding option is ignored if data is a buffer. It defaults to 'utf8'.
 	* mode [ integer ] default = 0o666 
 	* flag [ string ] default = 'w' 
 
+```javascript
+
+return await fs-promise-util.tryWriteFile(file, data, { encoding : 'utf8' })
+	.then(() => {
+	.catch((err) => {
+		return Promise.resolve();
+					});
+			})
+			.catch((err) => {
+				// log inability to write
+		return Promise.resolve();
+			});
+			```
+
 ### fs-promise-util.unlink (path)
 
 Promise for fs.unlink
 
 * path [ string | Buffer ]
+
+
+```javascript
+
+return fs-promise-util
+	.unlink(path)
+	.catch((unlinkErr) => {
+		// log error
+		return Promise.resolve();
+	});
+	```
+
 
 This method deletes a name from the filesystem.  If that name was the last link to a file and no processes have the file open, the file is deleted and the space it was using is made available for reuse.
 
@@ -355,3 +384,4 @@ return await fs-promise-util.writeFile(filePath, data, { encoding : 'utf8' })
 				// log inability to write
 		return Promise.resolve();
 			});
+			```
