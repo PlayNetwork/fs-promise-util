@@ -61,13 +61,9 @@ This method returns a new readStream object.
 	* end [ integer]
 
 ```javascript
-return await fs-promise-util
+let readerStream = fs-promise-util
 	.createReadStream(
-		'file to read')
-	.catch((err) => {
-		//log error message
-		return Promise.resolve();
-	});
+		'info.txt');
 ```
 
 options is an object or string with the following defaults:
@@ -79,8 +75,6 @@ options is an object or string with the following defaults:
   		mode: 0o666,
   		autoClose: true
 	}
-	
-For more info: http://nodejs.cn/doc/node/fs.html#fs_fs_createreadstream_path_options
 
 
 ### fs-promise-util.createWriteStream (path, options)
@@ -113,11 +107,10 @@ options is an object or string with the following defaults:
 	
 
 ```javascript
-return Promise.resolve(
-	fs-promise-util
-		.createWriteStream(
-			path, 
-			{defaultEncoding : 'utf8'})));
+let cacheStream = fs-promise-util
+	.createWriteStream(
+		filePath,
+		{ defaultEncoding : 'binary' });
 ```
 
 ### fs-promise-util.ensurePath (directoryPath)
