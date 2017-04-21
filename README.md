@@ -32,12 +32,15 @@ This method appends data to a file, creating the file if it does not exist and r
 	* flag [ string ] default = 'a' 
                                                 
 ```javascript
-return Promise.resolve(
-	fs-promise-util
-		.appendFile(
-			file, 
-			data, 
-			{ encoding : 'binary' }));
+return await fs-promise-util
+	.appendFile(
+		'message.txt', 
+		'data to append', 
+		{ encoding : 'binary' })
+	.catch((err) => {
+		//log error message
+		return Promise.resolve();
+	});
 ```  
 
 
