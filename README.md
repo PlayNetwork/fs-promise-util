@@ -119,7 +119,8 @@ return new Promise((resolve, reject) => {
 	writer.on('finish', resolve);					
 	// write data
 	writer.end(data);
-});```
+});
+```
 
 
 ### fs-promise-util.ensurePath (directoryPath)
