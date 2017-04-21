@@ -20,7 +20,7 @@ This module exposes the following methods.
 
 ### fs-promise-util.appendFile (file, data, options)
 
-This method appends data to a file, creating the file if it does not exist and returns a Promise. 
+This method appends data to a file, creating the file if it does not exist. It returns a promise for fs.appendFile (https://nodejs.org/dist/latest-v7.x/docs/api/fs.html#fs_fs_appendfile_file_data_options_callback)
 
 
 * file [ string | Buffer | number ] filename or file descriptor
@@ -43,12 +43,10 @@ return await fs-promise-util
 	});
 ```  
 
-For more info: http://nodejs.cn/doc/node/fs.html#fs_fs_appendfile_file_data_options_callback
 
+### fs-promise-util.createReadStream (filepath, options)
 
-### fs-promise-util.createReadStream (path, options)
-
-This method returns a new readStream object.
+The function fs-promise-util.createReadStream() allows you to open up a readable stream in a very simple manner. All you have to do is pass the path of the file to start streaming in. This method uses the graceful-fs createReadStream method. 
 
 * path [ string | Buffer ]
 * options [ string | Object ]
@@ -61,9 +59,15 @@ This method returns a new readStream object.
 	* end [ integer]
 
 ```javascript
-let readerStream = fs-promise-util
-	.createReadStream(
-		'info.txt');
+return new Promise((resolve, reject) => {
+	let
+		chunks = [],
+		reader = fs.createReadStream('info.txt', { encoding : 'utf8' });			
+	// capture events
+	reader.on('data', (chunk) => chunks.push(chunk));
+	reader.on('end', () => resolve(chunks.join('')));
+	reader.on('error', reject);
+});
 ```
 
 options is an object or string with the following defaults:
@@ -77,9 +81,9 @@ options is an object or string with the following defaults:
 	}
 
 
-### fs-promise-util.createWriteStream (path, options)
+### fs-promise-util.createWriteStream (filepath, options)
 
-This method returns a new writeStream object.
+The function fs-promise-util.createWriteStream() creates a writable stream. After a call to fs-promise-util.createWriteStream with the filepath, you have a writeable stream to work with. This method uses the graceful-fs createWriteStream method. 
 
 * path [ string | Buffer ]
 * options [ ]string | Object ]
@@ -107,15 +111,22 @@ options is an object or string with the following defaults:
 	
 
 ```javascript
-let cacheStream = fs-promise-util
-	.createWriteStream(
-		filePath,
-		{ defaultEncoding : 'binary' });
-```
+return new Promise((resolve, reject) => {
+	let writer = fs-promise-util
+		.createWriteStream('info.txt', { encoding : 'utf8' });			
+	// capture events
+	writer.on('error', reject);
+	writer.on('finish', resolve);					
+	// write data
+	writer.end(data);
+});```
+
 
 ### fs-promise-util.ensurePath (directoryPath)
 
-This method takes in a path as an argument. It creates a given path and returns a Promise.
+This method creates a given path and returns a Promise. It takes in a string  value which is the directory path and creates it.
+
+* directoryPath [ string ]
 
 ```javascript
 return fs-promise-util.ensurePath(directoryPath)
