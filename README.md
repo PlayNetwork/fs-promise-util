@@ -43,6 +43,7 @@ return await fs-promise-util
 	});
 ```  
 
+For more info: http://nodejs.cn/doc/node/fs.html#fs_fs_appendfile_file_data_options_callback
 
 
 ### fs-promise-util.createReadStream (path, options)
@@ -60,8 +61,27 @@ This method returns a new readStream object.
 	* end [ integer]
 
 ```javascript
-return Promise.resolve(fs-promise-util.createReadStream(path));
+return await fs-promise-util
+	.createReadStream(
+		'file to read')
+	.catch((err) => {
+		//log error message
+		return Promise.resolve();
+	});
 ```
+
+options is an object or string with the following defaults:
+
+	{
+  		flags: 'r',
+  		encoding: null,
+  		fd: null,
+  		mode: 0o666,
+  		autoClose: true
+	}
+	
+For more info: http://nodejs.cn/doc/node/fs.html#fs_fs_createreadstream_path_options
+
 
 ### fs-promise-util.createWriteStream (path, options)
 
