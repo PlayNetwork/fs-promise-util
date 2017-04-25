@@ -32,15 +32,16 @@ This method appends data to a file, creating the file if it does not exist. It r
 	* flag [ string ] default = 'a' 
                                                 
 ```javascript
-return await fs-promise-util
-	.appendFile(
-		'message.txt', 
-		'data to append', 
-		{ encoding : 'binary' })
-	.catch((err) => {
-		//log error message
-		return Promise.resolve();
-	});
+import fs from 'fs-promise-util';
+
+export async function saveMessage (message = '') {
+  return await fs
+    .appendFile(
+      '/path/to/messages.log',
+      message,
+      { encoding : 'utf8' })
+    .catch((err) => console.error(err));
+}
 ```  
 
 
@@ -59,15 +60,22 @@ The function fs-promise-util.createReadStream() allows you to open up a readable
 	* end [ integer]
 
 ```javascript
-return new Promise((resolve, reject) => {
-	let
-		chunks = [],
-		reader = fs.createReadStream('info.txt', { encoding : 'utf8' });			
-	// capture events
-	reader.on('data', (chunk) => chunks.push(chunk));
-	reader.on('end', () => resolve(chunks.join('')));
-	reader.on('error', reject);
-});
+import fs from 'fs-promise-util';
+
+export async function getContent () {
+	return await new Promise((resolve, reject) => {
+		let
+			chunks = [],
+			reader = fs
+				.createReadStream(
+					'/path/to/messages.log',
+					{ encoding : 'utf8' });			
+		// capture events
+		reader.on('data', (chunk) => chunks.push(chunk));
+		reader.on('end', () => resolve(chunks.join('')));
+		reader.on('error', reject);
+	});
+}
 ```
 
 options is an object or string with the following defaults:
@@ -111,15 +119,21 @@ options is an object or string with the following defaults:
 	
 
 ```javascript
-return new Promise((resolve, reject) => {
-	let writer = fs-promise-util
-		.createWriteStream('info.txt', { encoding : 'utf8' });			
-	// capture events
-	writer.on('error', reject);
-	writer.on('finish', resolve);					
-	// write data
-	writer.end(data);
-});
+import fs from 'fs-promise-util';
+
+export async function writeContent () {
+	return await new Promise((resolve, reject) => {
+		let writer = fs
+			.createWriteStream(
+				'/path/to/messages.log',
+				{ encoding : 'utf8' });			
+		// capture events
+		writer.on('error', reject);
+		writer.on('finish', resolve);					
+		// write data
+		writer.end(data);
+	});
+}
 ```
 
 
@@ -130,10 +144,18 @@ This method creates a given path and returns a Promise. It takes in a string  va
 * directoryPath [ string ]
 
 ```javascript
-return fs-promise-util.ensurePath(directoryPath)
-	.then((path) => {
-		return Promise.resolve(path);
-	});
+import fs from 'fs-promise-util';
+
+export async function writeContent () {
+	return await fs
+		.ensurePath(
+			'/path/to/messages')
+		.then((path) => {
+			console.info('directory created');
+			return Promise.resolve(path);
+		})
+		.catch((err) => console.error(err));
+	}
 ```
 
 ### fs-promise-util.exists (filePath)
@@ -141,7 +163,15 @@ return fs-promise-util.ensurePath(directoryPath)
 This method takes in a path as an argument. It checks whether a given path exists in the file system and returns a true or a false.
 
 ```javascript
-let exists = await fs-promise-util.exists(filePath);		
+import fs from 'fs-promise-util';
+
+export async function checkIfExists () {
+ let exists = await fs
+ 	.exists(
+ 		'/path/to/messages.log');
+ if(exists) {
+ 	return true;
+}		
 ```
 
 ### fs-promise-util.lstat (path)
@@ -149,11 +179,15 @@ let exists = await fs-promise-util.exists(filePath);
 This method returns a promise for lstat. More details here. (https://nodejs.org/api/fs.html#fs_fs_lstat_path_callback)
 
 ```javascript
-return new Promise((resolve) => {
-				fs-promise-util.lstat(path)
-					.then(() => resolve(true))
-					.catch(() => resolve(false));
-			});
+import fs from 'fs-promise-util';
+
+export async function getStatus () {
+	return fs
+		.lstat(
+			'/path/to/messages.log')
+		.catch((err) => console.error(err));
+	});
+}
 ```
 
 ### fs-promise-util.prune (directoryPath, filter, retainCount)
@@ -167,7 +201,16 @@ filter: pattern for the file removal. For example: a regular expression matching
 retainCount: number of files you want to keep in the directory
 
 ```javascript
-return await fs-promise-util.prune(directoryPath, filter, retainCount);
+import fs from 'fs-promise-util';
+
+export async function removeFiles () {
+	return await fs
+		.prune(
+			'/path/to/messages',
+			new RegExp('\\w+'),
+			'number of files to keep')
+		.catch((err) => console.error(err));
+}
 ```
 
 ### fs-promise-util.readdir (path, options)
@@ -179,7 +222,15 @@ This method reads the contents of a directory and returns a promise.
 	* encoding [ string ] default = 'utf8'
 	
 ```javascript
-return await fs-promise-util.readdir(path, { encoding : 'utf8' });
+import fs from 'fs-promise-util';
+
+export async function getFiles () {
+	return await fs
+		.readdir(
+			'/path/to/messages directory',
+			{ encoding : 'utf8' })
+		.catch((err) => console.error(err));
+}
 ```
 
 
@@ -193,10 +244,15 @@ This method returns the absolute path of a file or folder pointed by a symlink a
 
 	
 ```javascript
-return await fs-promise-util
-	.readlink(
-		path, 
-		{ encoding : 'utf8' });
+import fs from 'fs-promise-util';
+
+export async function getPath () {
+	return await fs
+		.readlink(
+			'/path/to/messages.log', 
+			'utf8')
+		.catch((err) => console.error(err));
+}
 ```
 
 ### fs-promise-util.readAndSort (directoryPath, options)
@@ -208,11 +264,15 @@ This method reads the content of the directory passed and sorts files based on d
 * options.filter : any filters passed with the file name(options.filter.name)
 
 ```javascript
-let exists = await fs-promise-util
-	.readAndSort(
-		directoryPath,
-		{ filter :{ name : new RegExp('\\w+'), 
-		notEmpty : true} };)
+import fs from 'fs-promise-util';
+
+export async function sortFiles () {
+	let exists = await fs
+		.readAndSort(
+			'/path/to/messages directory',
+			{ filter :{ name : new RegExp('\\w+')}})
+		.catch((err) => console.error(err));
+}
 ```
 
 ### fs-promise-util.readFile (file, options)
@@ -226,7 +286,14 @@ This method asynchronously reads the entire contents of a file and returns a Pro
 	
 	
 ```javascript
-await fs-promise-util.readFile('/etc/readme');
+import fs from 'fs-promise-util';
+
+export async function getFileContent () {
+	return await fs
+		.readFile(
+			'/path/to/log.txt')			)
+		.catch((err) => console.error(err));
+}
 ```
 
 	
@@ -234,7 +301,15 @@ If options is a string, then it specifies the encoding.
 
 
 ```javascript
-await fs-promise-util.readFile('/etc/readme', { encoding : 'utf8' });
+import fs from 'fs-promise-util';
+
+export async function getFileContent () {
+	return await fs
+		.readFile(
+			'/path/to/messages directory',
+			'utf8')
+		.catch((err) => console.error(err));
+}
 ```
 
 
@@ -250,13 +325,18 @@ This method returns the absolute pathname for the given path as a Promise. In ot
 Lets say the directory structure is '/etc/readme'
 
 ```javascript
-await fs-promise-util.realpath('readme');
+import fs from 'fs-promise-util';
+
+export async function getAbsolutePath () {
+	return await fs
+		.realPath(
+			'/messages directory',
+			'utf8')
+		.catch((err) => console.error(err));
+}
 ```
-
-
-Above method returns '/etc/readme' as a Promise.
 	
-The optional options argument can be a string specifying an encoding, or an object with an encoding property specifying the character encoding to use for the path passed to the callback. If the encoding is set to 'buffer', the path returned will be passed as a Buffer object.
+The optional 'options' argument can be a string specifying an encoding, or an object with an encoding property specifying the character encoding to use for the path passed to the callback. If the encoding is set to 'buffer', the path returned will be passed as a Buffer object.
 
 ### fs-promise-util.rename (oldPath, newPath)
 
@@ -267,7 +347,15 @@ Returns a Promise for fs.rename
 * newPath [ string | Buffer ]
 
 ```javascript
-await fs-promise-util.rename('temp/abc', 'tmp/xyz');
+import fs from 'fs-promise-util';
+
+export async function renameFile () {
+  return await fs
+    .rename(
+      '/path/to/tmp dir',
+      '/path/to/messages dir')
+    .catch((err) => console.error(err));
+}
 ```
 
 
@@ -291,11 +379,14 @@ This method retrieves information about a file pointed to by the given path. Ret
 
 
 ```javascript
-return new Promise((resolve) => {
-	return fs-promise-util.stat(path)
-				.then(() => resolve(true))
-				.catch(() => resolve(false));
-});
+import fs from 'fs-promise-util';
+
+export async function getStat () {
+	return fs
+		.stat(
+			'/path/to/info.log')
+		.catch((err) => console.error(err));
+}
 ```
 
 
@@ -309,15 +400,15 @@ Returns a Promise for fs.symlink (http://nodejs.cn/doc/node/fs.html#fs_fs_symlin
 * path [ string | Buffer ]
 
 ```javascript
-return await fs-promise-util
-	.symlink(trackPath, signaturePath)
-	.then(() => Promise.resolve(true))
-	.catch((err) => {
-		// log error
-		return Promise.resolve(false);
-	});
-```
+import fs from 'fs-promise-util';
 
+export async function createSymink () {
+	return await fs
+		.symlink('./foo','./bar')
+		.catch((err) => console.error(err));
+}
+```
+The above function creates a symbolic link named "bar" that points to "foo".
 
 Symbolic links are interpreted at run time as if the contents of the link had been substituted into the path being followed to find a file or directory.
 
@@ -344,13 +435,16 @@ The encoding option is ignored if data is a buffer. It defaults to 'utf8'.
 	* flag [ string ] default = 'w' 
 
 ```javascript
-return await fs-promise-util
-	.writeFile(
-		filePath,
-		data,
-		{ encoding : 'utf8' })
-	.then(() => Promise.resolve());
-	};
+import fs from 'fs-promise-util';
+
+export async function tryWriteContent (data = '') {
+	return await fs
+		.tryWriteFile(
+			'/path/to/info.log',
+			'data',
+			{ encoding : 'utf8' })
+		.catch((err) => console.error(err));
+}
 ```
 
 ### fs-promise-util.unlink (path)
@@ -361,12 +455,14 @@ Promise for fs.unlink
 
 
 ```javascript
-return fs-promise-util
-	.unlink(path)
-	.catch((err) => {
-		// log error
-		return Promise.resolve();
-	});
+import fs from 'fs-promise-util';
+
+export async function delete () {
+	return fs
+		.unlink(
+			'/path/to/file')
+		.catch((err) => console.error(err));
+}
 ```
 
 
@@ -396,11 +492,15 @@ The encoding option is ignored if data is a buffer. It defaults to 'utf8'.
 If options is a string, then it specifies the encoding.
 
 ```javascript
-return await fs-promise-util
-	.writeFile(
-		filePath,
-		data,
-		{ encoding : 'utf8' })
-	.then(() => Promise.resolve());
-	};
+import fs from 'fs-promise-util';
+
+
+export async function tryWriteContent () {
+	return await fs
+		.writeFile(
+			'/path/to/messages.log',
+			'data to write',
+			{ encoding : 'utf8' })
+		.catch((err) => console.error(err));
+}
 ```
