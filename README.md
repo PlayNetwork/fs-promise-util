@@ -65,15 +65,15 @@ import fs from 'fs-promise-util';
 export async function getContent () {
   return await new Promise((resolve, reject) => {
     let
-	  chunks = [],
-	  reader = fs
-	    .createReadStream(
-		  '/path/to/messages.log',
-		  { encoding : 'utf8' });		  			
+      chunks = [],
+      reader = fs
+        .createReadStream(
+          '/path/to/messages.log',
+          { encoding : 'utf8' });
     // capture events
-	reader.on('data', (chunk) => chunks.push(chunk));
-	reader.on('end', () => resolve(chunks.join('')));
-	reader.on('error', reject);
+    reader.on('data', (chunk) => chunks.push(chunk));
+    reader.on('end', () => resolve(chunks.join('')));
+    reader.on('error', reject);
   });
 }
 ```
@@ -124,14 +124,14 @@ import fs from 'fs-promise-util';
 export async function writeContent () {
   return await new Promise((resolve, reject) => {
     let writer = fs
-	  .createWriteStream(
-	    '/path/to/messages.log',
-		{ encoding : 'utf8' });						
-	// capture events
-	writer.on('error', reject);
-	writer.on('finish', resolve);					
-	// write data
-	writer.end(data);
+      .createWriteStream(
+        '/path/to/messages.log',
+        { encoding : 'utf8' });	
+    // capture events
+    writer.on('error', reject);
+    writer.on('finish', resolve);
+    // write data
+    writer.end(data);
   });
 }
 ```
@@ -148,13 +148,13 @@ import fs from 'fs-promise-util';
 
 export async function writeContent () {
   return await fs
-	.ensurePath(
-	  '/path/to/messages')
-	.then((path) => {
-	  console.info('directory created');
-	  return Promise.resolve(path);
-	})
-	.catch((err) => console.error(err));
+    .ensurePath(
+      '/path/to/messages')
+    .then((path) => {
+      console.info('directory created');
+      return Promise.resolve(path);
+    })
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -168,7 +168,7 @@ import fs from 'fs-promise-util';
 export async function checkIfExists () {
   let exists = await fs
     .exists(
- 	  '/path/to/messages.log');
+      '/path/to/messages.log');
   if(exists) {
     return true;
 }		
@@ -184,8 +184,8 @@ import fs from 'fs-promise-util';
 export async function getStatus () {
   return fs
     .lstat(
-	  '/path/to/messages.log')
-	.catch((err) => console.error(err));
+      '/path/to/messages.log')
+    .catch((err) => console.error(err));
   });
 }
 ```
@@ -209,7 +209,7 @@ export async function removeFiles () {
       '/path/to/messages',
       new RegExp('\\w+'),
       'number of files to keep')
-	.catch((err) => console.error(err));
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -227,9 +227,9 @@ import fs from 'fs-promise-util';
 export async function getFiles () {
   return await fs
     .readdir(
-	  '/path/to/messages directory',
-	  { encoding : 'utf8' })
-	.catch((err) => console.error(err));
+      '/path/to/messages directory',
+      { encoding : 'utf8' })
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -248,10 +248,10 @@ import fs from 'fs-promise-util';
 
 export async function getPath () {
   return await fs
-    .readlink(
-	  '/path/to/messages.log', 
-	  'utf8')
-	.catch((err) => console.error(err));
+  .readlink(
+    '/path/to/messages.log',
+    'utf8')
+  .catch((err) => console.error(err));
 }
 ```
 
@@ -269,9 +269,9 @@ import fs from 'fs-promise-util';
 export async function sortFiles () {
   let exists = await fs
     .readAndSort(
-	  '/path/to/messages directory',
-	  { filter :{ name : new RegExp('\\w+')}})
-	.catch((err) => console.error(err));
+      '/path/to/messages directory',
+      { filter :{ name : new RegExp('\\w+')}})
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -291,8 +291,8 @@ import fs from 'fs-promise-util';
 export async function getFileContent () {
   return await fs
     .readFile(
-	  '/path/to/log.txt')			
-	.catch((err) => console.error(err));
+      '/path/to/log.txt')
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -306,9 +306,9 @@ import fs from 'fs-promise-util';
 export async function getFileContent () {
   return await fs
     .readFile(
-	  '/path/to/messages directory',
-	  'utf8')
-	.catch((err) => console.error(err));
+      '/path/to/messages directory',
+      'utf8')
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -330,9 +330,9 @@ import fs from 'fs-promise-util';
 export async function getAbsolutePath () {
   return await fs
     .realPath(
-	  '/messages directory',
-	  'utf8')
-	.catch((err) => console.error(err));
+      '/messages directory',
+      'utf8')
+    .catch((err) => console.error(err));
 }
 ```
 	
@@ -384,8 +384,8 @@ import fs from 'fs-promise-util';
 export async function getStat () {
   return fs
     .stat(
-	  '/path/to/info.log')
-	.catch((err) => console.error(err));
+      '/path/to/info.log')
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -405,7 +405,7 @@ import fs from 'fs-promise-util';
 export async function createSymink () {
   return await fs
     .symlink('./foo','./bar')
-	.catch((err) => console.error(err));
+    .catch((err) => console.error(err));
 }
 ```
 The above function creates a symbolic link named "bar" that points to "foo".
@@ -440,10 +440,10 @@ import fs from 'fs-promise-util';
 export async function tryWriteContent (data = '') {
   return await fs
     .tryWriteFile(
-	  '/path/to/info.log',
-	  'data',
-	  { encoding : 'utf8' })
-	.catch((err) => console.error(err));
+      '/path/to/info.log',
+      'data',
+      { encoding : 'utf8' })
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -460,8 +460,8 @@ import fs from 'fs-promise-util';
 export async function delete () {
   return fs
     .unlink(
-	  '/path/to/file')
-	.catch((err) => console.error(err));
+      '/path/to/file')
+    .catch((err) => console.error(err));
 }
 ```
 
@@ -499,8 +499,8 @@ export async function tryWriteContent () {
   return await fs
     .writeFile(
       '/path/to/messages.log',
-	  'data to write',
-	  { encoding : 'utf8' })
-	.catch((err) => console.error(err));
+      'data to write',
+      { encoding : 'utf8' })
+    .catch((err) => console.error(err));
 }
 ```
