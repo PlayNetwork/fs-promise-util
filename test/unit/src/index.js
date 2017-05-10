@@ -25,6 +25,28 @@ describe('src/index', async () => {
 		});
 	});
 
+	describe('#createReadStream', () => {
+		it('should resolve to a readStream for a valid path', async() => {
+			let filename = 'i-exist.txt';
+			before(async () => await prepareTestCacheFile(filename));
+
+			return await fsWrapper
+				.createReadStream(TEST_CACHE_PATH)
+				.should.be.fulfilled;
+		});
+	});
+
+	describe('#createWriteStream', () => {
+		it('should resolve to a writeStream for a valid path', async() => {
+			let filename = 'i-exist.txt';
+			before(async () => await prepareTestCacheFile(filename));
+
+			return await fsWrapper
+				.createWriteStream(TEST_CACHE_PATH)
+				.should.be.fulfilled;
+		});
+	});
+
 	describe('#ensurePath', () => {
 		it('should reject given undefined path', async () => {
 			return fsWrapper
