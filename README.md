@@ -79,13 +79,15 @@ export async function getContent () {
 
 `options` is an object or string with the following defaults:
 
-	{
-		flags: 'r',
-		encoding: null,
-		fd: null,
-		mode: 0o666,
-		autoClose: true
-	}
+```javascript
+{
+	flags: 'r',
+	encoding: null,
+	fd: null,
+	mode: 0o666,
+	autoClose: true
+}
+```
 
 ### fs-promise-util.createWriteStream (filepath, options)
 
@@ -102,13 +104,15 @@ This method creates a writable stream with the given filepath. This uses the gra
 
 `options` is an object or string with the following defaults:
 
-	{
-		flags: 'w',
-		defaultEncoding: 'utf8',
-		fd: null,
-		mode: 0o666,
-		autoClose: true
-	}
+```javascript
+{
+	flags: 'w',
+	defaultEncoding: 'utf8',
+	fd: null,
+	mode: 0o666,
+	autoClose: true
+}
+```
 	
 ```javascript
 import fs from 'fs-promise-util';
@@ -258,7 +262,7 @@ export async function getPath () {
 This method reads the content of the directory passed and sorts files based on date and returns files.
 
 * `options.sort` - [ string ] - sort files based on date
-* `options.filter` - [ string ] - any filters passed with the file name: `options.filter.name`
+* `options.filter` - [ string ] - any filters passed with the file name (`options.filter.name`)
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -278,8 +282,6 @@ export async function sortFiles () {
 
 This method asynchronously reads the entire contents of a file and returns a Promise.
 
-If `options` is a string, then it specifies the encoding. 
-
 * `file` - [string | Buffer | integer ] - filename or file descriptor
 * `options` - [ Object | string ]
 	* `encoding` - [ string | null ] - default = null
@@ -297,7 +299,9 @@ export async function getFileContent () {
     });
 }
 ```
-	
+
+If `options` is a string, then it specifies the encoding. 
+
 ```javascript
 import fs from 'fs-promise-util';
 
@@ -316,7 +320,7 @@ export async function getFileContent () {
 
 This method returns the absolute pathname for the given path as a Promise. In other words, it returns a promise for [fs.realPath](https://nodejs.org/dist/latest-v7.x/docs/api/fs.html#fs_fs_realpath_path_options_callback).
 
-The `options` argument can be a string specifying an encoding or an object with an encoding property specifying the character encoding to use for the path passed to the callback. If the encoding is set to `buffer`, the path returned will be passed as a Buffer object.
+The `options` argument can be a string specifying an encoding or an object with an encoding property specifying the character encoding to use for the path passed to the callback. If the encoding is set to buffer, the path returned will be passed as a Buffer object.
 
 * `path` - [ string | Buffer ]
 * `options` - [ string | Object ]
@@ -483,6 +487,8 @@ export async function tryWriteContent () {
       '/path/to/messages.log',
       'data to write',
       { encoding : 'utf8' })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err)
+    });
 }
 ```
