@@ -1,5 +1,30 @@
 # fs-promise-util
-A utility library for file system interaction on *nix machines. This library utilizes the graceful-fs, an improvement over the fs module.
+A utility library for file system interaction. All the below async methods return a promise.
+
+- [ensurePath](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilensurepath-directorypath)
+- [prune](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilprune-directorypath-filter-retaincount)
+- [readAndSort](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilreadandsort-directorypath-options)
+
+##### fs async methods
+
+- [appendFile](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilappendfile-file-data-options)
+- [createReadStream](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilcreatereadstream-filepath-options)
+- [createWriteStream](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilcreatewritestream-filepath-options)
+- [exists](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilexists-filepath)
+- [lstat](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utillstat-path)
+- [readdir](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilreaddir-path-options)
+- [readlink](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilreadlink-path-options)
+- [readFile](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilreadfile-file-options)
+- [realpath](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilrealpath-path-options)
+- [rename](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilrename-oldpath-newpath)
+- [stat](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilstat-path)
+- [symlink](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilsymlink-target-path)
+- [unlink](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilunlink-path)
+- [writeFile](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilwritefile-filepath-data-options)
+
+
+
+This library utilizes the graceful-fs, an improvement over the fs module.
 
 ## Requirements
 
