@@ -24,9 +24,9 @@ This method appends data to a file, creating the file if it does not exist. It r
 * `data` - [ string | Buffer ]
 * `options` - [ Object | string ]
 
-	* `encoding` - [ string | null ] - default = 'utf8' 
+	* `encoding` - [ string | null ] - default = `utf8` 
 	* `mode` - [ integer ] - default = 0o666 
-	* `flag` - [ string ] - default = 'a' 
+	* `flag` - [ string ] - default = `a` 
                                                 
 ```javascript
 import fs from 'fs-promise-util';
@@ -69,7 +69,10 @@ export async function getContent () {
       reader = fs
         .createReadStream(
           '/path/to/messages.log',
-          { encoding : 'utf8' });
+          { 
+            encoding : 'utf8' 
+          }
+        );
 
     // capture events
     reader.on('data', (chunk) => chunks.push(chunk));
@@ -83,11 +86,11 @@ export async function getContent () {
 
 ```javascript
 {
-	flags: 'r',
-	encoding: null,
-	fd: null,
-	mode: 0o666,
-	autoClose: true
+  flags: 'r',
+  encoding: null,
+  fd: null,
+  mode: 0o666,
+  autoClose: true
 }
 ```
 
@@ -96,7 +99,7 @@ export async function getContent () {
 This method creates a writable stream with the given filepath. This uses the graceful-fs `createWriteStream` method. 
 
 * `path` - [ string | Buffer ]
-* `options` - [ ]string | Object ]
+* `options` - [ string | Object ]
 	* `flags` - [ string ]
 	* `defaultEncoding` - [ string ]
 	* `fd` - [ integer ]
@@ -108,11 +111,11 @@ This method creates a writable stream with the given filepath. This uses the gra
 
 ```javascript
 {
-	flags: 'w',
-	defaultEncoding: 'utf8',
-	fd: null,
-	mode: 0o666,
-	autoClose: true
+  flags: 'w',
+  defaultEncoding: 'utf8',
+  fd: null,
+  mode: 0o666,
+  autoClose: true
 }
 ```
 	
@@ -124,7 +127,10 @@ export async function writeContent () {
     let writer = fs
       .createWriteStream(
         '/path/to/messages.log',
-        { encoding : 'utf8' });
+        { 
+          encoding : 'utf8'
+        }
+      );
 
     // capture events
     writer.on('error', reject);
@@ -220,7 +226,7 @@ This method reads the contents of a directory and returns a promise.
 
 * `path` - [ string | Buffer ]
 * `options` - [ string | Object ] 
-	* `encoding` - [ string ] - default = 'utf8'
+	* `encoding` - [ string ] - default = `utf8`
 	
 ```javascript
 import fs from 'fs-promise-util';
@@ -244,7 +250,7 @@ This method returns the absolute path of a file or folder pointed by a symlink a
 
 * `path` - [ string | Buffer ]
 * `options` - [ string | Object ]
-	* `encoding` - [ string ] - default = 'utf8'
+	* `encoding` - [ string ] - default = `utf8`
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -292,7 +298,7 @@ This method asynchronously reads the entire contents of a file and returns a Pro
 * `file` - [string | Buffer | integer ] - filename or file descriptor
 * `options` - [ Object | string ]
 	* `encoding` - [ string | null ] - default = null
-	* `flag` - [ string ] - default = 'r'
+	* `flag` - [ string ] - default = `r`
 	
 ```javascript
 import fs from 'fs-promise-util';
@@ -331,7 +337,7 @@ The `options` argument can be a string specifying an encoding or an object with 
 
 * `path` - [ string | Buffer ]
 * `options` - [ string | Object ]
-	* `encoding` - [ string ] - default = 'utf8'
+	* `encoding` - [ string ] - default = `utf8`
 	
 Lets say the directory structure is `/etc/readme`:
 
@@ -431,9 +437,9 @@ The encoding option is ignored if `data` is a buffer and defaults to `utf8`.
 * `file` - [ string | Buffer | number ] - filename or file descriptor
 * `data` - [ string | Buffer ]
 * `options` - [ Object | string ]
-	* `encoding` - [ string | null ] - default = 'utf8' 
+	* `encoding` - [ string | null ] - default = `utf8` 
 	* `mode` - [ integer ] - default = 0o666 
-	* `flag` - [ string ] - default = 'w' 
+	* `flag` - [ string ] - default = `w` 
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -485,9 +491,9 @@ If `options` is a string, then it specifies the encoding.
 * `file` - [ string | Buffer | number ] - filename or file descriptor
 * `data` - [ string | Buffer | Uint8Array ]
 * `options` - [ Object | string ]
-	* `encoding` - [ string | null ] - default = 'utf8' 
+	* `encoding` - [ string | null ] - default = `utf8` 
 	* `mode` - [ integer ] - default = 0o666 
-	* `flag` [ string ] - default = 'w' 
+	* `flag` [ string ] - default = `w` 
 
 ```javascript
 import fs from 'fs-promise-util';
