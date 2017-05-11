@@ -107,13 +107,15 @@ export async function getContent () {
 
 options is an object or string with the following defaults:
 
-	{
-  		flags: 'r',
-  		encoding: null,
-  		fd: null,
-  		mode: 0o666,
-  		autoClose: true
-	}
+```javascript
+{
+  	flags: 'r',
+  	encoding: null,
+  	fd: null,
+  	mode: 0o666,
+  	autoClose: true
+}
+```
 
 
 ### fs-promise-util.createWriteStream (filepath, options)
@@ -131,18 +133,15 @@ fs-promise-util.createWriteStream creates a writable stream. After a call to fs-
 
 options is an object or string with the following defaults:
 
-	{
-  
-  		flags: 'w',
-  
-  		defaultEncoding: 'utf8',
-  
-  		fd: null,
-  
-  		mode: 0o666,
-  
-  		autoClose: true
-	}
+```javascript
+{
+	flags: 'w',
+ 	defaultEncoding: 'utf8',
+  	fd: null,
+  	mode: 0o666,
+  	autoClose: true
+}
+```
 	
 
 ```javascript
