@@ -36,9 +36,11 @@ export async function saveMessage (message = '') {
     .appendFile(
       '/path/to/messages.log',
       message,
-      { encoding : 'utf8' })
-    .catch((err) => {
-      console.error(err)
+      { 
+        encoding : 'utf8'
+      }
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```  
@@ -145,13 +147,12 @@ import fs from 'fs-promise-util';
 export async function writeContent () {
   return await fs
     .ensurePath(
-      '/path/to/messages')
-    .then((path) => {
+      '/path/to/messages'
+    ).then((path) => {
       console.info('directory created');
       return Promise.resolve(path);
-    })
-    .catch((err) => {
-      console.error(err)
+    }).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -183,9 +184,9 @@ import fs from 'fs-promise-util';
 export async function getStatus () {
   return fs
     .lstat(
-      '/path/to/messages.log')
-    .catch((err) => {
-      console.error(err)
+      '/path/to/messages.log'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -206,9 +207,9 @@ export async function removeFiles () {
     .prune(
       '/path/to/messages',
       new RegExp('\\w+'),
-      'number of files to keep')
-    .catch((err) => {
-      console.error(err)
+      'number of files to keep'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -228,9 +229,11 @@ export async function getFiles () {
   return await fs
     .readdir(
       '/path/to/messages directory',
-      { encoding : 'utf8' })
-    .catch((err) => {
-      console.error(err)
+      { 
+        encoding : 'utf8'
+      }
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -250,9 +253,9 @@ export async function getPath () {
   return await fs
     .readlink(
       '/path/to/messages.log',
-      'utf8')
-    .catch((err) => {
-      console.error(err)
+      'utf8'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -271,9 +274,13 @@ export async function sortFiles () {
   let exists = await fs
     .readAndSort(
       '/path/to/messages directory',
-      { filter :{ name : new RegExp('\\w+')}})
-    .catch((err) => {
-      console.error(err)
+      { 
+        filter : { 
+          name : new RegExp('\\w+')
+        }
+      }
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -293,9 +300,9 @@ import fs from 'fs-promise-util';
 export async function getFileContent () {
   return await fs
     .readFile(
-      '/path/to/log.txt')
-    .catch((err) => {
-      console.error(err)
+      '/path/to/log.txt'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -309,9 +316,9 @@ export async function getFileContent () {
   return await fs
     .readFile(
       '/path/to/messages directory',
-      'utf8')
-    .catch((err) => {
-      console.error(err)
+      'utf8'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -335,9 +342,9 @@ export async function getAbsolutePath () {
   return await fs
     .realPath(
       '/messages directory',
-      'utf8')
-    .catch((err) => {
-      console.error(err)
+      'utf8'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -356,9 +363,9 @@ export async function renameFile () {
   return await fs
     .rename(
       '/path/to/tmp dir',
-      '/path/to/messages dir')
-    .catch((err) => {
-      console.error(err)
+      '/path/to/messages dir'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -381,9 +388,9 @@ import fs from 'fs-promise-util';
 export async function getStat () {
   return fs
     .stat(
-      '/path/to/info.log')
-    .catch((err) => {
-      console.error(err)
+      '/path/to/info.log'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -400,9 +407,11 @@ import fs from 'fs-promise-util';
 
 export async function createSymink () {
   return await fs
-    .symlink('./foo','./bar')
-    .catch((err) => {
-      console.error(err)
+    .symlink(
+      './foo',
+      './bar'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -434,9 +443,11 @@ export async function tryWriteContent (data = '') {
     .tryWriteFile(
       '/path/to/info.log',
       'data',
-      { encoding : 'utf8' })
-    .catch((err) => {
-      console.error(err)
+      { 
+        encoding : 'utf8' 
+      }
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -453,9 +464,9 @@ import fs from 'fs-promise-util';
 export async function delete () {
   return fs
     .unlink(
-      '/path/to/file')
-    .catch((err) => {
-      console.error(err)
+      '/path/to/file'
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
@@ -486,9 +497,11 @@ export async function tryWriteContent () {
     .writeFile(
       '/path/to/messages.log',
       'data to write',
-      { encoding : 'utf8' })
-    .catch((err) => {
-      console.error(err)
+      { 
+        encoding : 'utf8' 
+      }
+    ).catch((err) => {
+      console.error(err);
     });
 }
 ```
