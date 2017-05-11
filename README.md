@@ -1,5 +1,7 @@
 # fs-promise-util
-A utility library for file system interaction. All the below async methods return a promise.
+A utility library for file system interaction. All methods return a promise.
+
+##### new async methods
 
 - [ensurePath](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilensurepath-directorypath)
 - [prune](https://github.com/PlayNetwork/fs-promise-util/tree/v1.0.0#fs-promise-utilprune-directorypath-filter-retaincount)
@@ -45,7 +47,7 @@ This module exposes the following methods.
 
 ### fs-promise-util.appendFile (file, data, options)
 
-This method appends data to a file, creating the file if it does not exist. It returns a promise for fs.appendFile (https://nodejs.org/dist/latest-v7.x/docs/api/fs.html#fs_fs_appendfile_file_data_options_callback)
+fs-promise-util.appendFile appends data to a file, creating the file if it does not exist. Returns a promise for fs.appendFile (https://nodejs.org/dist/latest-v7.x/docs/api/fs.html#fs_fs_appendfile_file_data_options_callback)
 
 
 * file [ string | Buffer | number ] filename or file descriptor
@@ -72,7 +74,7 @@ export async function saveMessage (message = '') {
 
 ### fs-promise-util.createReadStream (filepath, options)
 
-The function fs-promise-util.createReadStream() allows you to open up a readable stream in a very simple manner. All you have to do is pass the path of the file to start streaming in. This method uses the graceful-fs createReadStream method. 
+fs-promise-util.createReadStream allows you to open up a readable stream. All you have to do is pass the path of the file to start streaming in.
 
 * path [ string | Buffer ]
 * options [ string | Object ]
@@ -116,7 +118,7 @@ options is an object or string with the following defaults:
 
 ### fs-promise-util.createWriteStream (filepath, options)
 
-The function fs-promise-util.createWriteStream() creates a writable stream. After a call to fs-promise-util.createWriteStream with the filepath, you have a writeable stream to work with. This method uses the graceful-fs createWriteStream method. 
+fs-promise-util.createWriteStream creates a writable stream. After a call to fs-promise-util.createWriteStream with the filepath, you have a writeable stream to work with. 
 
 * path [ string | Buffer ]
 * options [ ]string | Object ]
@@ -164,7 +166,7 @@ export async function writeContent () {
 
 ### fs-promise-util.ensurePath (directoryPath)
 
-This method creates a given path and returns a Promise. It takes in a string  value which is the directory path and creates it.
+fs-promise-util.ensurePath creates a given path and returns a promise. It takes in a string  value which is the directory path.
 
 * directoryPath [ string ]
 
@@ -185,7 +187,7 @@ export async function writeContent () {
 
 ### fs-promise-util.exists (filePath)
 
-This method takes in a path as an argument. It checks whether a given path exists in the file system and returns a true or a false.
+fs-promise-util.exists takes in a path as an argument. It checks whether a given path exists in the file system and resolves to a true or a false.
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -201,7 +203,7 @@ export async function checkIfExists () {
 
 ### fs-promise-util.lstat (path)
 
-This method returns a promise for lstat. More details here. (https://nodejs.org/api/fs.html#fs_fs_lstat_path_callback)
+fs-promise-util.lstat returns a promise for lstat. More details here. (https://nodejs.org/api/fs.html#fs_fs_lstat_path_callback)
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -217,7 +219,7 @@ export async function getStatus () {
 
 ### fs-promise-util.prune (directoryPath, filter, retainCount)
 
-This method removes 'x' number of least recent files matching a given pattern from a directory.
+fs-promise-util.prune removes 'x' number of least recent files matching a given pattern from a directory.
 
 directoryPath: directory to remove the files
 
@@ -240,7 +242,7 @@ export async function removeFiles () {
 
 ### fs-promise-util.readdir (path, options)
 
-This method reads the contents of a directory and returns a promise.
+fs-promise-util.readdir reads the contents of a directory and returns a promise.
 
 * path [ string | Buffer ]
 * options [ string | Object ] 
@@ -261,7 +263,7 @@ export async function getFiles () {
 
 ### fs-promise-util.readlink (path, options)
 
-This method returns the absolute path of a file or folder pointed by a symlink as a promise. If the path is not an symlink or shortcut, it will resolve to an empty string.
+fs-promise-util.readlink returns the absolute path of a file or folder pointed by a symlink as a promise. If the path is not a symlink or shortcut, it will resolve to an empty string.
 
 * path [ string | Buffer ]
 * options [ string | Object ]
@@ -282,7 +284,7 @@ export async function getPath () {
 
 ### fs-promise-util.readAndSort (directoryPath, options)
 
-This method reads the content of the directory passed and sorts files based on date and returns files. 'options' object can be used to pass in:
+fs-promise-util.readAndSort reads the content of the directory passed and sorts files based on date and returns files. 'options' object can be used to pass in:
 
 * options.sort : sort files based on date
 
@@ -302,7 +304,7 @@ export async function sortFiles () {
 
 ### fs-promise-util.readFile (file, options)
 
-This method asynchronously reads the entire contents of a file and returns a Promise
+fs-promise-util.readFile reads the entire contents of a file asynchronously and returns a promise.
 
 * file [string | Buffer | integer ] filename or file descriptor
 * options [ Object | string ]
@@ -340,7 +342,7 @@ export async function getFileContent () {
 
 ### fs-promise-util.realpath (path, options)
 
-This method returns the absolute pathname for the given path as a Promise. In other words, it returns a promise for fs.realPath (https://nodejs.org/dist/latest-v7.x/docs/api/fs.html#fs_fs_realpath_path_options_callback)
+fs-promise-util.realpath returns the absolute pathname for the given path as a promise.(https://nodejs.org/dist/latest-v7.x/docs/api/fs.html#fs_fs_realpath_path_options_callback)
 
 
 * path [ string | Buffer ]
@@ -365,8 +367,7 @@ The optional 'options' argument can be a string specifying an encoding, or an ob
 
 ### fs-promise-util.rename (oldPath, newPath)
 
-This method renames a file, moving it between directories if required.
-Returns a Promise for fs.rename
+fs-promise-util.rename renames a file, moving it between directories if required. Returns a promise for fs.rename.
 
 * oldPath [ string | Buffer ]
 * newPath [ string | Buffer ]
@@ -398,7 +399,7 @@ If oldpath refers to a symbolic link, the link is renamed; if newpath refers to 
 
 ### fs-promise-util.stat (path)
 
-This method retrieves information about a file pointed to by the given path. Returns a Promise for fs.stat (http://nodejs.cn/doc/node/fs.html#fs_fs_stat_path_callback)
+fs-promise-util.stat retrieves information about a file pointed to by the given path. Returns a promise for fs.stat (http://nodejs.cn/doc/node/fs.html#fs_fs_stat_path_callback)
 
 * path [ string | Buffer ]
 
@@ -417,9 +418,9 @@ export async function getStat () {
 
 ### fs-promise-util.symlink (target, path)
 
-This method creates a symbolic link named path which contains the string target. 
+fs-promise-util.symlink creates a symbolic link named path which contains the string target. 
 
-Returns a Promise for fs.symlink (http://nodejs.cn/doc/node/fs.html#fs_fs_symlink_target_path_type_callback)
+Returns a promise for fs.symlink (http://nodejs.cn/doc/node/fs.html#fs_fs_symlink_target_path_type_callback)
 
 * target [ string | Buffer ]
 * path [ string | Buffer ]
@@ -445,9 +446,9 @@ If path exists, it will not be overwritten.
 
 ### fs-promise-util.tryWriteFile (file, data, options)
 
-This method is a wrapper for fs-promise-util.writeFile that always resolves to a Promise.
+fs-promise-util.tryWriteFile is a wrapper for fs-promise-util.writeFile that always resolves to a promise.
 
-Asynchronously writes data to a file, replacing the file if it already exists. data can be a string or a buffer.
+Asynchronously writes data to a file, replacing the file if it already exists. Data can be a string or a buffer.
 
 The encoding option is ignored if data is a buffer. It defaults to 'utf8'.
 
@@ -474,7 +475,7 @@ export async function tryWriteContent (data = '') {
 
 ### fs-promise-util.unlink (path)
 
-Promise for fs.unlink
+Returns a promise for fs.unlink
 
 * path [ string | Buffer ]
 
@@ -500,7 +501,7 @@ If the name referred to a symbolic link, the link is removed.
 
 ### fs-promise-util.writeFile (filePath, data, options)
 
-Returns a Promise for fs.writeFile (http://nodejs.cn/doc/node/fs.html#fs_fs_writefile_file_data_options_callback)
+Returns a promise for fs.writeFile (http://nodejs.cn/doc/node/fs.html#fs_fs_writefile_file_data_options_callback)
 
 This method asynchronously writes data to a file, replacing the file if it already exists. data can be a string or a buffer.
 
