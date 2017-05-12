@@ -30,6 +30,7 @@
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "debug": "^2.2.0",
+    "graceful-fs": "^4.1.11",
     "mkdirp": "0.5.1",
     "renege": "^0.1.4",
     "source-map-support": "^0.4.5"
