@@ -18,6 +18,7 @@
   },
   "main": "./dist",
   "scripts": {
+    "posttest": "gulp coveralls",
     "prepublish": "gulp build",
     "test": "gulp lint && gulp clean-reports && nyc -- _mocha ./test/unit",
     "test-unit": "gulp clean-reports && nyc -- _mocha ./test/unit"
@@ -49,8 +50,6 @@
     "gulp-babel": "^6.1.2",
     "gulp-coveralls": "^0.1.4",
     "gulp-eslint": "^3.0.1",
-    "gulp-istanbul": "^1.1.1",
-    "gulp-mocha": "^3.0.1",
     "gulp-sourcemaps": "^2.5.0",
     "gulp-util": "^3.0.7",
     "mock-spawn": "^0.2.6",
