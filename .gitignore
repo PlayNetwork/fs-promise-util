@@ -5,3 +5,4 @@ node_modules
 notes.md
 reports
 /test/sandbox/
+/npm-debug.log
