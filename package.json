@@ -52,6 +52,7 @@
     "gulp-eslint": "^3.0.1",
     "gulp-sourcemaps": "^2.5.0",
     "gulp-util": "^3.0.7",
+    "mocha": "^3.3.0",
     "mock-spawn": "^0.2.6",
     "nyc": "^10.1.2",
     "sinon": "^1.17.7"
