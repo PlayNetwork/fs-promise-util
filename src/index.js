@@ -13,9 +13,13 @@ export default ((self) => {
 	// Promise for fs.appendFile
 	self.appendFile = renege.promisify(fs.appendFile);
 
-	self.createReadStream = fs.createReadStream;
+	self.createReadStream = (filePath, options) => {
+		return Promise.resolve(fs.createReadStream(filePath, options));
+	};
 
-	self.createWriteStream = fs.createWriteStream;
+	self.createWriteStream = (filePath, options) => {
+		return Promise.resolve(fs.createWriteStream(filePath, options));
+	};
 
 	// Promise for mkdirp (3rd party module)
 	self.ensurePath = (directoryPath) => {
