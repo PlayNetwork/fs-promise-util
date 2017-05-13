@@ -264,6 +264,34 @@ describe('src/index', async () => {
 					.promisify(fs.stat)(path.join(TEST_CACHE_PATH, filename))
 					.should.be.fulfilled);
 		});
+
+		it('should resolve, remove, and retain file given TEST_CACHE_PATH with files', async () => {
+			let
+				filename = 'file-1.txt',
+				date = new Date();
+			date.setDate(date.getDate()-1);
+
+			return await prepareTestCacheAsDirectory()
+				.then(() => prepareTestCacheFile('file-4.txt'))
+				.then(() => prepareTestCacheFile('file-3.txt'))
+				.then(() => prepareTestCacheFile('file-2.txt'))
+				.then(() => prepareTestCacheFile(filename))
+				.then(() => fsWrapper.readAndSort(TEST_CACHE_PATH,
+					{
+					filter : {
+						type : {
+							files : true
+						},
+						modifiedAfter: date,
+						modifiedBefore: date
+					}
+
+				})
+			)
+			.then(() => renege
+				.promisify(fs.stat)(path.join(TEST_CACHE_PATH, filename))
+				.should.be.fulfilled);
+		});
 	});
 
 	describe('#readFile', () => {
