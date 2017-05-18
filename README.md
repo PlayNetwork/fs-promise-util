@@ -1,5 +1,8 @@
 # fs-promise-util
 
+[![Build Status](https://travis-ci.org/PlayNetwork/fs-promise-util.svg?branch=master)](https://travis-ci.org/PlayNetwork/fs-promise-util)
+[![Coverage Status](https://coveralls.io/repos/github/PlayNetwork/fs-promise-util/badge.svg?branch=master)](https://coveralls.io/github/PlayNetwork/fs-promise-util?branch=master)
+
 A utility library for file system interaction. All methods return a promise.
 
 ##### new async methods
@@ -53,10 +56,10 @@ fs-promise-util.appendFile appends data to a file, creating the file if it does 
 * `data` - [ string | Buffer ]
 * `options` - [ Object | string ]
 
-	* `encoding` - [ string | null ] - default = `utf8` 
-	* `mode` - [ integer ] - default = 0o666 
-	* `flag` - [ string ] - default = `a` 
-                                                
+	* `encoding` - [ string | null ] - default = `utf8`
+	* `mode` - [ integer ] - default = 0o666
+	* `flag` - [ string ] - default = `a`
+
 ```javascript
 import fs from 'fs-promise-util';
 
@@ -65,14 +68,14 @@ export async function saveMessage (message = '') {
     .appendFile(
       '/path/to/messages.log',
       message,
-      { 
+      {
         encoding : 'utf8'
       }
     ).catch((err) => {
       console.error(err);
     });
 }
-```  
+```
 
 ### fs-promise-util.createReadStream (filepath, options)
 
@@ -99,8 +102,8 @@ export async function getContent () {
       reader = fs
         .createReadStream(
           '/path/to/messages.log',
-          { 
-            encoding : 'utf8' 
+          {
+            encoding : 'utf8'
           }
         );
 
@@ -126,7 +129,7 @@ export async function getContent () {
 
 ### fs-promise-util.createWriteStream (filepath, options)
 
-fs-promise-util.createWriteStream creates a writable stream. After a call to fs-promise-util.createWriteStream with the filepath, you have a writeable stream to work with. 
+fs-promise-util.createWriteStream creates a writable stream. After a call to fs-promise-util.createWriteStream with the filepath, you have a writeable stream to work with.
 
 * `path` - [ string | Buffer ]
 * `options` - [ string | Object ]
@@ -148,7 +151,7 @@ fs-promise-util.createWriteStream creates a writable stream. After a call to fs-
   autoClose: true
 }
 ```
-	
+
 ```javascript
 import fs from 'fs-promise-util';
 
@@ -157,7 +160,7 @@ export async function writeContent () {
     let writer = fs
       .createWriteStream(
         '/path/to/messages.log',
-        { 
+        {
           encoding : 'utf8'
         }
       );
@@ -207,7 +210,7 @@ export async function checkIfExists () {
     );
 
   return exists;
-}		
+}
 ```
 
 ### fs-promise-util.lstat (path)
@@ -232,7 +235,7 @@ export async function getStatus () {
 fs-promise-util.prune removes 'x' number of least recent files matching a given pattern from a directory.
 
 * `directoryPath` - [ string ] - directory to remove the files
-* `filter` - [ string ] - pattern for the file removal, i.e. a regular expression matching a file name 
+* `filter` - [ string ] - pattern for the file removal, i.e. a regular expression matching a file name
 * `retainCount` - [ number ] - number of files you want to keep in the directory
 
 ```javascript
@@ -255,9 +258,9 @@ export async function removeFiles () {
 fs-promise-util.readdir reads the contents of a directory and returns a promise.
 
 * `path` - [ string | Buffer ]
-* `options` - [ string | Object ] 
+* `options` - [ string | Object ]
 	* `encoding` - [ string ] - default = `utf8`
-	
+
 ```javascript
 import fs from 'fs-promise-util';
 
@@ -265,7 +268,7 @@ export async function getFiles () {
   return await fs
     .readdir(
       '/path/to/messages directory',
-      { 
+      {
         encoding : 'utf8'
       }
     ).catch((err) => {
@@ -310,8 +313,8 @@ export async function sortFiles () {
   let exists = await fs
     .readAndSort(
       '/path/to/messages directory',
-      { 
-        filter : { 
+      {
+        filter : {
           name : new RegExp('\\w+')
         }
       }
@@ -329,7 +332,7 @@ fs-promise-util.readFile reads the entire contents of a file asynchronously and 
 * `options` - [ Object | string ]
 	* `encoding` - [ string | null ] - default = null
 	* `flag` - [ string ] - default = `r`
-	
+
 ```javascript
 import fs from 'fs-promise-util';
 
@@ -343,7 +346,7 @@ export async function getFileContent () {
 }
 ```
 
-If `options` is a string, then it specifies the encoding. 
+If `options` is a string, then it specifies the encoding.
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -368,7 +371,7 @@ The `options` argument can be a string specifying an encoding or an object with 
 * `path` - [ string | Buffer ]
 * `options` - [ string | Object ]
 	* `encoding` - [ string ] - default = `utf8`
-	
+
 Lets say the directory structure is `/etc/readme`:
 
 ```javascript
@@ -384,7 +387,7 @@ export async function getAbsolutePath () {
     });
 }
 ```
-	
+
 ### fs-promise-util.rename (oldPath, newPath)
 
 fs-promise-util.rename renames a file, moving it between directories if required, and returns a promise for `fs.rename`.
@@ -454,22 +457,22 @@ export async function createSymink () {
 The above function creates a symbolic link named `bar` that points to `foo`.
 
 * Symbolic links are interpreted at run time as if the contents of the link had been substituted into the path being followed to find a file or directory.
-* Symbolic links may contain path components, which, if used at the start of the link, refer to the parent directories of that in which the link resides. 
+* Symbolic links may contain path components, which, if used at the start of the link, refer to the parent directories of that in which the link resides.
 * A symbolic link, also known as a soft link, may point to an existing file or to a nonexistent one; the latter case is known as a dangling link.
 * If `path` exists, it will not be overwritten.
 
 ### fs-promise-util.tryWriteFile (file, data, options)
 
-fs-promise-util.tryWriteFile is a wrapper for `fs-promise-util.writeFile` that always resolves to a promise.  It asynchronously writes data to a file, replacing the file if it already exists. 
+fs-promise-util.tryWriteFile is a wrapper for `fs-promise-util.writeFile` that always resolves to a promise.  It asynchronously writes data to a file, replacing the file if it already exists.
 
 The encoding option is ignored if `data` is a buffer and defaults to `utf8`.
 
 * `file` - [ string | Buffer | number ] - filename or file descriptor
 * `data` - [ string | Buffer ]
 * `options` - [ Object | string ]
-	* `encoding` - [ string | null ] - default = `utf8` 
-	* `mode` - [ integer ] - default = 0o666 
-	* `flag` - [ string ] - default = `w` 
+	* `encoding` - [ string | null ] - default = `utf8`
+	* `mode` - [ integer ] - default = 0o666
+	* `flag` - [ string ] - default = `w`
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -479,8 +482,8 @@ export async function tryWriteContent (data = '') {
     .tryWriteFile(
       '/path/to/info.log',
       'data',
-      { 
-        encoding : 'utf8' 
+      {
+        encoding : 'utf8'
       }
     ).catch((err) => {
       console.error(err);
@@ -515,15 +518,15 @@ export async function delete () {
 
 fs-promise-util.writeFile asynchronously writes data to a file, replacing the file if it already exists, and returns a promise for [fs.writeFile](http://nodejs.cn/doc/node/fs.html#fs_fs_writefile_file_data_options_callback).
 
-The encoding option is ignored if `data` is a buffer. It defaults to `utf8`. 
+The encoding option is ignored if `data` is a buffer. It defaults to `utf8`.
 If `options` is a string, then it specifies the encoding.
 
 * `file` - [ string | Buffer | number ] - filename or file descriptor
 * `data` - [ string | Buffer | Uint8Array ]
 * `options` - [ Object | string ]
-	* `encoding` - [ string | null ] - default = `utf8` 
-	* `mode` - [ integer ] - default = 0o666 
-	* `flag` [ string ] - default = `w` 
+	* `encoding` - [ string | null ] - default = `utf8`
+	* `mode` - [ integer ] - default = 0o666
+	* `flag` [ string ] - default = `w`
 
 ```javascript
 import fs from 'fs-promise-util';
@@ -533,8 +536,8 @@ export async function tryWriteContent () {
     .writeFile(
       '/path/to/messages.log',
       'data to write',
-      { 
-        encoding : 'utf8' 
+      {
+        encoding : 'utf8'
       }
     ).catch((err) => {
       console.error(err);
