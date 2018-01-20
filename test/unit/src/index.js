@@ -285,12 +285,145 @@ describe('src/index', async () => {
 						modifiedAfter: date,
 						modifiedBefore: date
 					}
-
 				})
 			)
 			.then(() => renege
 				.promisify(fs.stat)(path.join(TEST_CACHE_PATH, filename))
 				.should.be.fulfilled);
+		});
+
+		it('should filter out future files (modifiedBefore)', async () => {
+			return await prepareTestCacheAsDirectory()
+				.then(() => prepareTestCacheFile('file-4.txt', '203101010000'))
+				.then(() => prepareTestCacheFile('file-3.txt'))
+				.then(() => prepareTestCacheFile('file-2.txt', '203001010000'))
+				.then(() => prepareTestCacheFile('file-1.txt'))
+				.then(() => fsWrapper.readAndSort(TEST_CACHE_PATH, {
+						filter : {
+							type : {
+								files : true
+							},
+							modifiedBefore: new Date()
+						}
+					})
+				)
+				.then((result) => {
+					result[0].should.equal('test/sandbox/test-cache/file-1.txt');
+					result[1].should.equal('test/sandbox/test-cache/file-3.txt');
+				})
+		});
+
+		it('should filter out future files (relative to modifiedBefore)', async () => {
+			const
+				AGE1 = 20000,
+				AGE2 = 30000,
+				AGE3 = 10000;
+
+			let now = Date.now();
+
+			return await prepareTestCacheAsDirectory()
+				.then(() => prepareTestCacheFile('file-4.txt', new Date(now + AGE1)))
+				.then(() => prepareTestCacheFile('file-3.txt'))
+				.then(() => prepareTestCacheFile('file-2.txt', new Date(now + AGE2)))
+				.then(() => prepareTestCacheFile('file-1.txt'))
+				.then(() => fsWrapper.readAndSort(TEST_CACHE_PATH, {
+						filter : {
+							type : {
+								files : true
+							},
+							modifiedBefore : AGE3
+						}
+					})
+				)
+				.then((result) => {
+					result[0].should.equal('test/sandbox/test-cache/file-1.txt');
+					result[1].should.equal('test/sandbox/test-cache/file-3.txt');
+				})
+		});
+
+		it('should return only future files (relative to modifiedAfter)', async () => {
+			const
+				AGE1 = 100000,
+				AGE2 = 200000,
+				AGE3 = 300000,
+				AGE4 = 150000;
+
+			let now = Date.now();
+
+			return await prepareTestCacheAsDirectory()
+				.then(() => prepareTestCacheFile('file-4.txt', new Date(now + AGE1)))
+				.then(() => prepareTestCacheFile('file-3.txt', new Date(now + AGE2)))
+				.then(() => prepareTestCacheFile('file-2.txt', new Date(now + AGE3)))
+				.then(() => prepareTestCacheFile('file-1.txt'))
+				.then(() => fsWrapper.readAndSort(TEST_CACHE_PATH, {
+						filter : {
+							type : {
+								files : true
+							},
+							modifiedAfter : AGE4
+						}
+					})
+				)
+				.then((result) => {
+					result[0].should.equal('test/sandbox/test-cache/file-2.txt');
+					result[1].should.equal('test/sandbox/test-cache/file-3.txt');
+				})
+		});
+
+		it('should return only future files (modifiedAfter)', async () => {
+			const
+				FUTURE_YEAR = 2027,
+				FUTURE_MONTH = 1,
+				FUTURE_DAY = 1;
+
+			return await prepareTestCacheAsDirectory()
+				.then(() => prepareTestCacheFile('file-4.txt', '203101010000'))
+				.then(() => prepareTestCacheFile('file-3.txt'))
+				.then(() => prepareTestCacheFile('file-2.txt', '203001010000'))
+				.then(() => prepareTestCacheFile('file-1.txt'))
+				.then(() => fsWrapper.readAndSort(TEST_CACHE_PATH, {
+						filter : {
+							type : {
+								files : true
+							},
+							modifiedAfter: new Date(FUTURE_YEAR, FUTURE_MONTH, FUTURE_DAY)
+						}
+					})
+				)
+				.then((result) => {
+					result[0].should.equal('test/sandbox/test-cache/file-4.txt');
+					result[1].should.equal('test/sandbox/test-cache/file-2.txt');
+				})
+		});
+
+		it('should return files with mod dates in a date range (modifedBefore and After)', async () => {
+			const
+				DATEONEYEAR = 2029,
+				DATEONEMONTH = 1,
+				DATEONEDAY = 1,
+				DATETWOYEAR = 2033,
+				DATETWOMONTH = 1,
+				DATETWODAY = 1;
+
+			return await prepareTestCacheAsDirectory()
+				.then(() => prepareTestCacheFile('file-4.txt', '203401010000'))
+				.then(() => prepareTestCacheFile('file-3.txt', '203201010000'))
+				.then(() => prepareTestCacheFile('file-2.txt', '203001010000'))
+				.then(() => prepareTestCacheFile('file-1.txt', '202701010000'))
+				.then(() => fsWrapper.readAndSort(TEST_CACHE_PATH, {
+						filter : {
+							type : {
+								files : true
+							},
+							modifiedAfter: new Date(DATEONEYEAR, DATEONEMONTH, DATEONEDAY),
+							modifiedBefore: new Date(DATETWOYEAR, DATETWOMONTH, DATETWODAY)
+						}
+					})
+				)
+				.then((result) => {
+					result[0].should.equal('test/sandbox/test-cache/file-3.txt');
+					result[1].should.equal('test/sandbox/test-cache/file-2.txt');
+				})
 		});
 	});
 

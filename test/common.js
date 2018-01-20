@@ -30,6 +30,11 @@ global.execAsPromise = (command, args) => {
   });
 };
 
+function pad2 ( number ) {
+  const TEN = 10;
+  return (number < TEN ? '0' : '') + number
+}
+
 global.prepareTestCacheAsDirectory = () => {
   return global.execAsPromise('mkdir', ['-p', TEST_CACHE_PATH]);
 };
@@ -38,8 +43,23 @@ global.prepareTestCacheAsFile = () => {
   return global.execAsPromise('touch', [TEST_CACHE_PATH]);
 };
 
-global.prepareTestCacheFile = (filename) => {
-  return global.execAsPromise('touch', [path.join(TEST_CACHE_PATH, filename)]);
+global.prepareTestCacheFile = (filename, modifiedDate) => {
+  if (modifiedDate) {
+    if (modifiedDate instanceof Date) {
+      let
+        day = modifiedDate.getDate(),
+        hour = modifiedDate.getHours(),
+        min = modifiedDate.getMinutes(),
+        month = modifiedDate.getMonth(),
+        year = modifiedDate.getFullYear();
+
+      return global.execAsPromise('touch', ['-mt', [year, pad2(month), pad2(day), pad2(hour), pad2(min)].join(''), path.join(TEST_CACHE_PATH, filename)]);
+    }
+
+    return global.execAsPromise('touch', ['-mt', modifiedDate, path.join(TEST_CACHE_PATH, filename)]);
+  } else {
+    return global.execAsPromise('touch', [path.join(TEST_CACHE_PATH, filename)]);
+  }
 };
 
 global.prepareTestCacheAsSymbolicLink = () => {
@@ -53,4 +73,3 @@ global.removeTestCache = () => {
 global.should = chai.should();
 
 global.TEST_CACHE_PATH = TEST_CACHE_PATH;
-
