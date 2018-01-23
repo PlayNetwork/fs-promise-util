@@ -2,7 +2,7 @@
   "name": "fs-promise-util",
   "description": "a utility library for file system interaction on *nix machines",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "",
   "engine": "node >= 4",
   "keywords": [

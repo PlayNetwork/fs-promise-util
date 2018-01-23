@@ -99,6 +99,7 @@ export default ((self) => {
 
 	// Promise for fs.readdir that additional sorts files based on date
 	self.readAndSort = async (directoryPath, options) => {
+
 		debug('sorting files based on date at %s', directoryPath);
 
 		// ensure sort function is defined
@@ -173,10 +174,12 @@ export default ((self) => {
 				if (options.filter && options.filter.modifiedAfter) {
 					fileStats = fileStats.filter((fileStat) => {
 						if (options.filter.modifiedAfter instanceof Date) {
-							return fileStat.stats.mtime <= options.filter.modifiedAfter;
+							return fileStat.stats.mtime.getTime() >= options.filter.modifiedAfter.getTime();
 						}
 
-						return (Date.now() - fileStat.stats.mtime) <= options.filter.modifiedAfter;
+						let baseTime = Date.now() - options.filter.modifiedAfter;
+
+						return fileStat.stats.mtime >= baseTime;
 					});
 				}
 
@@ -184,10 +187,12 @@ export default ((self) => {
 				if (options.filter && options.filter.modifiedBefore) {
 					fileStats = fileStats.filter((fileStat) => {
 						if (options.filter.modifiedBefore instanceof Date) {
-							return fileStat.stats.mtime >= options.filter.modifiedBefore;
+							return fileStat.stats.mtime.getTime() <= options.filter.modifiedBefore.getTime();
 						}
 
-						return (Date.now() - fileStat.stats.mtime) >= options.filter.modifiedBefore;
+						let baseTime = Date.now() - options.filter.modifiedBefore;
+
+						return fileStat.stats.mtime <= baseTime;
 					});
 				}
 
