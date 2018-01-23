@@ -50,12 +50,13 @@ global.prepareTestCacheFile = (filename, modifiedDate) => {
         day = modifiedDate.getDate(),
         hour = modifiedDate.getHours(),
         min = modifiedDate.getMinutes(),
-        month = modifiedDate.getMonth(),
+        month = modifiedDate.getMonth()+1,
         year = modifiedDate.getFullYear();
 
       return global.execAsPromise('touch', ['-mt', [year, pad2(month), pad2(day), pad2(hour), pad2(min)].join(''), path.join(TEST_CACHE_PATH, filename)]);
     }
 
+    // assume if you are here, the date is in correct touch format
     return global.execAsPromise('touch', ['-mt', modifiedDate, path.join(TEST_CACHE_PATH, filename)]);
   } else {
     return global.execAsPromise('touch', [path.join(TEST_CACHE_PATH, filename)]);

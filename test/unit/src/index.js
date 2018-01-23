@@ -7,8 +7,8 @@ import renege from 'renege';
 
 const
 	NEGATIVE_RETAIN_COUNT = -5,
-	INVALID_PATH = 3;
-
+	INVALID_PATH = 3,
+	TWO = 2;
 
 describe('src/index', async () => {
 	afterEach(async () => await removeTestCache());
@@ -308,6 +308,7 @@ describe('src/index', async () => {
 					})
 				)
 				.then((result) => {
+					result.length.should.equal(TWO);
 					result[0].should.equal('test/sandbox/test-cache/file-1.txt');
 					result[1].should.equal('test/sandbox/test-cache/file-3.txt');
 				})
@@ -322,9 +323,9 @@ describe('src/index', async () => {
 			let now = Date.now();
 
 			return await prepareTestCacheAsDirectory()
-				.then(() => prepareTestCacheFile('file-4.txt', new Date(now + AGE1)))
+				.then(() => prepareTestCacheFile('file-4.txt', new Date(now - AGE1)))
 				.then(() => prepareTestCacheFile('file-3.txt'))
-				.then(() => prepareTestCacheFile('file-2.txt', new Date(now + AGE2)))
+				.then(() => prepareTestCacheFile('file-2.txt', new Date(now - AGE2)))
 				.then(() => prepareTestCacheFile('file-1.txt'))
 				.then(() => fsWrapper.readAndSort(TEST_CACHE_PATH, {
 						filter : {
@@ -336,16 +337,17 @@ describe('src/index', async () => {
 					})
 				)
 				.then((result) => {
-					result[0].should.equal('test/sandbox/test-cache/file-1.txt');
-					result[1].should.equal('test/sandbox/test-cache/file-3.txt');
+					result.length.should.equal(TWO);
+					result[0].should.equal('test/sandbox/test-cache/file-2.txt');
+					result[1].should.equal('test/sandbox/test-cache/file-4.txt');
 				})
 		});
 
 		it('should return only future files (relative to modifiedAfter)', async () => {
 			const
-				AGE1 = 100000,
-				AGE2 = 200000,
-				AGE3 = 300000,
+				AGE1 = 50000,
+				AGE2 = 300000,
+				AGE3 = 400000,
 				AGE4 = 150000;
 
 			let now = Date.now();
@@ -360,11 +362,16 @@ describe('src/index', async () => {
 							type : {
 								files : true
 							},
-							modifiedAfter : AGE4
+							modifiedAfter : -AGE4	// negative means to start looking in the future
 						}
 					})
 				)
 				.then((result) => {
+					if (!result) {
+						return Promise.reject('No files found');
+					}
+
+					result.length.should.equal(TWO);
 					result[0].should.equal('test/sandbox/test-cache/file-2.txt');
 					result[1].should.equal('test/sandbox/test-cache/file-3.txt');
 				})
@@ -391,12 +398,13 @@ describe('src/index', async () => {
 					})
 				)
 				.then((result) => {
+					result.length.should.equal(TWO);
 					result[0].should.equal('test/sandbox/test-cache/file-4.txt');
 					result[1].should.equal('test/sandbox/test-cache/file-2.txt');
 				})
 		});
 
-		it('should return files with mod dates in a date range (modifedBefore and After)', async () => {
+		it('should return files with mod dates in a date range (modifiedBefore and After)', async () => {
 			const
 				DATEONEYEAR = 2029,
 				DATEONEMONTH = 1,
@@ -421,6 +429,7 @@ describe('src/index', async () => {
 					})
 				)
 				.then((result) => {
+					result.length.should.equal(TWO);
 					result[0].should.equal('test/sandbox/test-cache/file-3.txt');
 					result[1].should.equal('test/sandbox/test-cache/file-2.txt');
 				})

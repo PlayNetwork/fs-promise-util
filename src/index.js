@@ -177,7 +177,9 @@ export default ((self) => {
 							return fileStat.stats.mtime.getTime() >= options.filter.modifiedAfter.getTime();
 						}
 
-						return (Date.now() - fileStat.stats.mtime) >= options.filter.modifiedAfter;
+						let baseTime = Date.now() - options.filter.modifiedAfter;
+
+						return fileStat.stats.mtime >= baseTime;
 					});
 				}
 
@@ -188,7 +190,9 @@ export default ((self) => {
 							return fileStat.stats.mtime.getTime() <= options.filter.modifiedBefore.getTime();
 						}
 
-						return (Date.now() - fileStat.stats.mtime) <= options.filter.modifiedBefore;
+						let baseTime = Date.now() - options.filter.modifiedBefore;
+
+						return fileStat.stats.mtime <= baseTime;
 					});
 				}
 
